@@ -2,62 +2,85 @@ package File::Which;
 
 use strict;
 
-use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
-
 require Exporter;
 
-@ISA = qw(Exporter);
+@File::Which::ISA       = qw(Exporter);
 
-@EXPORT = qw(which);
-@EXPORT_OK = qw(where);
+@File::Which::EXPORT    = qw(which);
+@File::Which::EXPORT_OK = qw(where);
 
-$VERSION = '0.03';
+$File::Which::VERSION = '0.04';
 
 use File::Spec;
-use constant IS_WIN32 => $^O eq 'MSWin32';
 
+my $Is_VMS    = ($^O eq 'VMS');
+my $Is_MacOS  = ($^O eq 'MacOS');
+my $Is_DOSish = (($^O eq 'MSWin32') or
+                ($^O eq 'dos')     or
+                ($^O eq 'os2'));
 
-my @path_ext = ('');        # For Win32 systems, stores the extensions used for
-                            # executable files
-                            # For others, the empty string is used
-                            # because 'perl' . '' eq 'perl' => easier
-if (IS_WIN32) {
+# For Win32 systems, stores the extensions used for
+# executable files
+# For others, the empty string is used
+# because 'perl' . '' eq 'perl' => easier
+my @path_ext = ('');
+if ($Is_DOSish) {
     if ($ENV{PATHEXT}) {    # WinNT
         push @path_ext, split ';', $ENV{PATHEXT};
     }
     else {
-        push @path_ext, map { ".$_" } qw(com exe bat); # Win9X: doesn't have PATHEXT, so needs hardcoded.
+        push @path_ext, qw(.com .exe .bat); # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
     }
+}
+elsif ($Is_VMS) {
+    push @path_ext, qw(.exe .com);
 }
 
 sub which {
-    my ($exec, $opt) = @_;
+    my ($exec) = @_;
 
     return undef unless $exec;
 
+    my $all = wantarray;
     my @results = ();
     
-    for my $base (map { File::Spec->catfile($_, $exec) } File::Spec->path()) {
-
-        if ($ENV{HOME} and not IS_WIN32) {
-            # only works on Unix, but that's
-            # normal: on Win32 the shell doesn't treat '~' specially.
-            $base =~ s/~/$ENV{HOME}/o;
+    # check for aliases first
+    if ($Is_VMS) {
+        my $symbol = `SHOW SYMBOL $exec`;
+        chomp($symbol);
+        if (!$?) {
+            return $symbol unless $all;
+            push @results, $symbol;
         }
-
-        for my $ext (@path_ext) {
-            my $file = $base.$ext;
-            if(-x $file) {
-                unless($opt->{all}) {           # Normal case
-                    return $file;
-                } else {
-                    push @results, $file;       # Make list to return later
-                }
+    }
+    if ($Is_MacOS) {
+        my @aliases = split /\,/, $ENV{Aliases};
+        foreach my $alias (@aliases) {
+            # This has not been tested!!
+            # PPT which says MPW-Perl cannot resolve `Alias $alias`,
+            # let's just hope it's fixed
+            if (lc($alias) eq lc($exec)) {
+                chomp(my $file = `Alias $alias`);
+                return $file unless $all;
+                push @results, $file;
+                # we can stop this loop as if it finds more aliases matching,
+                # it'll just be the same result anyway
+                last;
             }
         }
     }
     
-    if($opt->{all}) {
+    for my $base (map { File::Spec->catfile($_, $exec) } File::Spec->path()) {
+       for my $ext (@path_ext) {
+            my $file = $base.$ext;
+            if (-x $file or ($Is_MacOS and -e _)) {
+                    return $file unless $all;
+                    push @results, $file;       # Make list to return later
+            }
+        }
+    }
+    
+    if($all) {
         return @results;
     } else {
         return undef;
@@ -65,7 +88,8 @@ sub which {
 }
 
 sub where {
-    which($_[0], { all => 1 });
+    my @res = which($_[0]); # force wantarray
+    return @res;
 }
 
 1;
@@ -75,18 +99,18 @@ __END__
 
 File::Which - Portable implementation of the `which' utility
 
-=head1 Synopsis
+=head1 SYNOPSIS
 
-  use File::Which;      # exports which()
+  use File::Which;                  # exports which()
   use File::Which qw(which where);  # exports which() and where()
   
   my $exe_path = which('perldoc');
   
   my @paths = where('perl');
   - Or -
-  my @paths = which('perl', {all => 1 });
+  my @paths = which('perl'); # an array forces search for all of them
 
-=head1 Description
+=head1 DESCRIPTION
 
 C<File::Which> was created to be able to get the paths to executable programs
 on systems under which the `which' program wasn't implemented in the shell.
@@ -99,7 +123,7 @@ C<.bat> to identify them, C<File::Which> takes extra steps to assure that you
 will find the correct file (so for example, you might be searching for C<perl>,
 it'll try C<perl.exe>, C<perl.bat>, etc.)
 
-=head1 Steps Used on Win32
+=head1 Steps Used on Win32, DOS, OS2 and VMS
 
 =head2 Windows NT
 
@@ -108,17 +132,20 @@ by the shell to look for executable files. Usually, it will contain a list in
 the form C<.EXE;.BAT;.COM;.JS;.VBS> etc. If C<File::Which> finds such an
 environment variable, it parses the list and uses it as the different extensions.
 
-=head2 Windows 9x
+=head2 Windows 9x and other ancient Win/DOS/OS2
 
 This set of operating systems don't have the C<PATHEXT> variable, and usually
 you will find executable files there with the extensions C<.exe>, C<.bat> and
 (less likely) C<.com>. C<File::Which> uses this hardcoded list if it's running
 under Win32 but does not find a C<PATHEXT> variable.
 
+=head2 VMS
+
+Same case as Windows 9x: uses C<.exe> and C<.com> (in that order).
 
 =head1 Functions
 
-=head2 which($short_exe_name, \%opt)
+=head2 which($short_exe_name)
 
 Exported by default.
 
@@ -131,35 +158,23 @@ C<C:\Perl\Bin\perl.exe>).
 
 If it does I<not> find the executable, it returns C<undef>.
 
-If C<$ENV{HOME}> is present, C<File::Which> will expand all instances
-of C<'~'> in the C<PATH>, replacing them with the value of
-C<$ENV{HOME}>. However, this will not occur on Win32, as the shell
-doesn't treat it specially there.
-
-C<which()> also accepts a hash reference with options: 
-
-=over 4
-
-=item *
-
-B<all>: if set to 1, C<which()> will return a list of all the executable paths
-it finds, and not just the first match. See C<where()>.
-
-=back
+If C<which()> is called in list context, it will return I<all> the
+matches.
 
 =head2 where($short_exe_name)
 
 Not exported by default.
 
-Same as C<which($short_exe_name, { all =E<gt> 1 })>. Same as the C<`where'> utility,
-will return an array containing all the path names matching C<$short_exe_name>.
+Same as C<which($short_exe_name)> in array context. Same as the
+C<`where'> utility, will return an array containing all the path names
+matching C<$short_exe_name>.
 
 
 =head1 Bugs
 
-Has not been tested under MacOS. If anyone could give me the information needed
-for it to work on the Mac (how it searches the path, etc... although MacOs E<lt>
-X don't have a shell, so this might not really apply).
+Not tested on VMS or MacOS, although there is platform specific code
+for those. Anyone who haves a second would be very kind to send me a
+report of how it went.
 
 =head1 Author
 
@@ -169,6 +184,12 @@ Originated in I<modperl-2.0/lib/Apache/Build.pm>. Changed for use in DocSet
 (for the mod_perl site) and Win32-awareness by me, with slight modifications
 by Stas Bekman, then extracted to create C<File::Which>.
 
+Version 0.04 had some significant platform-related changes, taken from
+the Perl Power Tools C<`which'> implementation by Abigail with
+enhancements from Peter Prymmer. See
+http://www.perl.com/language/ppt/src/which/index.html for more
+information.
+
 =head1 License
 
 This library is free software; you can redistribute it and/or modify it under
@@ -176,6 +197,7 @@ the same terms as Perl itself.
 
 =head1 See Also
 
-L<File::Spec>.
+L<File::Spec>, Perl Power Tools:
+http://www.perl.com/language/ppt/index.html .
 
 =cut

@@ -1,5 +1,13 @@
 Revision history for File::Which.
 
+0.04  Thu 20 Jun 21:50:30 CET 2002
+    - Re-wrote some parts for more platform-specific code (Mac and VMS
+      primarily). Thanks to Abigail and the PPT `which':
+      http://www.perl.com/language/ppt/src/which/index.html
+    - Removed the '~' handling: was probably broken anyway.
+    - fixed a bug with pwhich -a where it would return the number of
+      results instead of the results
+
 0.03  Wed 24 Apr 14:48:50 CET 2002
     - Changed the '~' handling: last version was buggy, it needs to
       only replace it on Unix and if $ENV{HOME} exists, replacing it

@@ -7,37 +7,39 @@ use Getopt::Std;
 
 my %opts = ();
 
-getopts('a', \%opts);
+getopts('av', \%opts);
 
 my @files = @ARGV;
 
 unless(@files) {
     print <<"EOS";
-usage: $0 [-a] programname [programname ...]
+Usage: $0 [-a] [-v] programname [programname ...]
       -a        Print all matches in PATH, not just the first.
+      -v        Prints version and exits
 EOS
           
     exit;
 }
 
-my %which_opt = ();
+if ($opts{v}) {
+    print <<"END";
+This is pwhich running File::Which version $File::Which::VERSION
 
-if($opts{a}) {
-    $which_opt{all} = 1;
+Copyright 2002 Per Einar Ellefsen.
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+END
+
+    exit;
 }
 
-unless($opts{a}) {
-    print 
-        map { 
-            (which($_, \%which_opt) || ''), "\n"
-        } @files;
-} else {
-    print 
-        map { 
-            map { $_, "\n" } 
-                (which($_, \%which_opt) || '')
-            } @files;
+for my $file (@files) {
+    my @result = $opts{a} ? which($file) : scalar which($file); # need to force scalar
+    for my $result (@result) {
+        print $result ? "$result\n" : '';
+    }
 }
+
 
 =head1 NAME
 
@@ -48,8 +50,9 @@ pwhich - Perl-only `which'
   $ pwhich perl
   $ pwhich -a perl          # print all matches
   $ pwhich perl perldoc ... # look for multiple programs
+  $ pwhich -a perl perldoc ...
 
-=head1 Description
+=head1 DESCRIPTION
 
 `pwhich' is a command-line utility program for finding paths to other
 programs based on the user's C<PATH>. It is similar to the usualy Unix
@@ -59,7 +62,7 @@ purely in Perl (uses the module C<File::Which>), so is portable.
 
 =head1 Calling syntax
 
-B<pwhich> [I<-a>] I<programname> [I<programnames ...>]
+  $ pwhich [-a] programname [programname ...]
 
 =head2 Options
 
@@ -71,6 +74,10 @@ The option I<-a> will make C<pwhich> print all matches found in the
 C<PATH> variable instead of just the first one. Each match is printed
 on a separate line.
 
+=item -v
+
+Prints version (of C<File::Which>) and copyright notice and exits.
+
 =back
 
 =head1 License
@@ -80,7 +87,7 @@ it under the same terms as Perl itself.
 
 =head1 See Also
 
-L<perl>(1), L<File::Which>(3)
+L<perl>, L<File::Which>
 
 =head1 Author
 

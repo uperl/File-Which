@@ -2,6 +2,8 @@ Changes
 Makefile.PL
 MANIFEST
 README
-test.pl
 Which.pm
 bin/pwhich
+t/load.t
+t/simple.t
+t/all.t
