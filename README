@@ -1,5 +1,5 @@
-File::Which version 0.02
-========================
+File::Which
+===========
 
 File::Which is a portable implementation (in Perl) of `which', and can
 be used to get the absolute filename of an executable program
@@ -13,8 +13,8 @@ To install this module type the following (on Windows, use `nmake',
 which can be obtained freely from Microsoft: see ActivePerl
 documentation):
 
-   $ tar zxvf File-Which-0.03.tar.gz
-   $ cd File-Which-0.03
+   $ tar zxvf File-Which-x.xx.tar.gz  (replace x.xx with the correct version number)
+   $ cd File-Which-x.xx
    $ perl Makefile.PL
    $ make
    $ make test
@@ -26,6 +26,20 @@ Using the CPAN shell:
    cpan> install File::Which
    cpan> exit
 
+TESTING
+
+When you run `make test', File::Which will test some of its
+functionality. It uses the t/test-bin/ directory for this, treating
+the files below it as programs.
+
+The tests might still be a bit shaky because there is a bit of magic
+involved in doing this -- please report any problems you might have.
+
+Furthermore, the files under t/test-bin/ are *not* supposed to be
+executed: do so at your own risk. Especially, the *.exe files are not
+valid applications as they aren't compiled and might make your system
+crash or whatever. Execute them at your own risk. (But don't worry,
+this package doesn't bite otherwise :)
 
 DEPENDENCIES
 

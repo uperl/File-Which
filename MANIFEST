@@ -7,3 +7,11 @@ bin/pwhich
 t/load.t
 t/simple.t
 t/all.t
+t/test-bin/test1.exe
+t/test-bin/test2.bat
+t/test-bin/test3
+t/test-bin/test4/foo.txt
+t/test-bin/all
+t/test-bin/all.bat
+t/test-bin/all.exe
+t/test-bin/README.txt

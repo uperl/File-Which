@@ -11,16 +11,6 @@ getopts('av', \%opts);
 
 my @files = @ARGV;
 
-unless(@files) {
-    print <<"EOS";
-Usage: $0 [-a] [-v] programname [programname ...]
-      -a        Print all matches in PATH, not just the first.
-      -v        Prints version and exits
-EOS
-          
-    exit;
-}
-
 if ($opts{v}) {
     print <<"END";
 This is pwhich running File::Which version $File::Which::VERSION
@@ -33,13 +23,27 @@ END
     exit;
 }
 
-for my $file (@files) {
-    my @result = $opts{a} ? which($file) : scalar which($file); # need to force scalar
-    for my $result (@result) {
-        print $result ? "$result\n" : '';
-    }
+unless(@files) {
+    print <<"EOS";
+Usage: $0 [-a] [-v] programname [programname ...]
+      -a        Print all matches in PATH, not just the first.
+      -v        Prints version and exits
+
+EOS
+          
+    exit;
 }
 
+for my $file (@files) {
+    my @result = $opts{a} ? which($file) : scalar which($file); # need to force scalar
+    @result = () unless defined $result[0];   # we might end up with @result = (undef) -> 1 elem
+    for my $result (@result) {
+        print "$result\n" if $result;
+    }
+    print STDERR "pwhich: no $file in PATH\n" unless @result;
+}
+
+__END__
 
 =head1 NAME
 
@@ -62,7 +66,7 @@ purely in Perl (uses the module C<File::Which>), so is portable.
 
 =head1 Calling syntax
 
-  $ pwhich [-a] programname [programname ...]
+  $ pwhich [-a] [-v] programname [programname ...]
 
 =head2 Options
 
@@ -87,7 +91,7 @@ it under the same terms as Perl itself.
 
 =head1 See Also
 
-L<perl>, L<File::Which>
+L<perl>, L<File::Which>, L<which(1)>
 
 =head1 Author
 

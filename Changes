@@ -1,5 +1,21 @@
 Revision history for File::Which.
 
+0.05  Mon 24 Jun 23:06:45 CET 2002
+    - Made sure the file wasn't a directory, as directories usually
+      have x set.
+    - made pwhich say so if it didn't find a file.
+    - improve file searching: file doesn't have to be -x on MacOS,
+      only -e. Same thing on DOSish, but only if the file extension is
+      in PATHEXT (so we don't look for non-executable files that
+      happen to be in PATH).
+    - For DOSish, VMS and Mac, add current directory in front of path,
+      as (on Win32) this one is searched first. (could someone tell me
+      if this assumption is true on VMS and MacOS too?)
+    - large updates to test suite: we now emulate executable files
+      inside t/test-bin/. Like this we have more control. I hope
+      this test suite will be better, but it is probably still
+      shaky. Any reports would do me a lot of good.
+
 0.04  Thu 20 Jun 21:50:30 CET 2002
     - Re-wrote some parts for more platform-specific code (Mac and VMS
       primarily). Thanks to Abigail and the PPT `which':
@@ -22,7 +38,7 @@ Revision history for File::Which.
     - Added the which option --all. Other options just bloat everything.
     - Added `pwhich', perl-only replacement for `which'.
 
-0.01  Sun Apr 14 23:05:37 CET 2002
-	- original version; extracted from DocSet. Only plain which() with
-	  docs and tests. 
+0.01  Sun 14 Apr 23:05:37 CET 2002
+    - original version; extracted from DocSet. Only plain which() with
+      docs and tests. 
 

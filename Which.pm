@@ -9,7 +9,7 @@ require Exporter;
 @File::Which::EXPORT    = qw(which);
 @File::Which::EXPORT_OK = qw(where);
 
-$File::Which::VERSION = '0.04';
+$File::Which::VERSION = '0.05';
 
 use File::Spec;
 
@@ -25,14 +25,14 @@ my $Is_DOSish = (($^O eq 'MSWin32') or
 # because 'perl' . '' eq 'perl' => easier
 my @path_ext = ('');
 if ($Is_DOSish) {
-    if ($ENV{PATHEXT}) {    # WinNT
+    if ($ENV{PATHEXT} and $Is_DOSish) {    # WinNT. PATHEXT might be set on Cygwin, but not used.
         push @path_ext, split ';', $ENV{PATHEXT};
     }
     else {
         push @path_ext, qw(.com .exe .bat); # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
     }
 }
-elsif ($Is_VMS) {
+elsif ($Is_VMS) { 
     push @path_ext, qw(.exe .com);
 }
 
@@ -61,6 +61,7 @@ sub which {
             # let's just hope it's fixed
             if (lc($alias) eq lc($exec)) {
                 chomp(my $file = `Alias $alias`);
+                last unless $file;  # if it failed, just go on the normal way
                 return $file unless $all;
                 push @results, $file;
                 # we can stop this loop as if it finds more aliases matching,
@@ -69,11 +70,27 @@ sub which {
             }
         }
     }
-    
-    for my $base (map { File::Spec->catfile($_, $exec) } File::Spec->path()) {
+
+    my @path = File::Spec->path();
+    unshift @path, File::Spec->curdir if $Is_DOSish or $Is_VMS or $Is_MacOS;
+
+    for my $base (map { File::Spec->catfile($_, $exec) } @path) {
        for my $ext (@path_ext) {
             my $file = $base.$ext;
-            if (-x $file or ($Is_MacOS and -e _)) {
+# print STDERR "$file\n";
+
+            if ((-x $file or    # executable, normal case
+                 ($Is_MacOS ||  # MacOS doesn't mark as executable so we check -e
+                  ($Is_DOSish and grep { $file =~ /$_$/i } @path_ext[1..$#path_ext])
+                                # DOSish systems don't pass -x on non-exe/bat/com files.
+                                # so we check -e. However, we don't want to pass -e on files
+                                # that aren't in PATHEXT, like README.
+                 and -e _)
+                ) and !-d _)
+            {                   # and finally, we don't want dirs to pass (as they are -x)
+
+# print STDERR "-x: ", -x $file, " -e: ", -e _, " -d: ", -d _, "\n";
+
                     return $file unless $all;
                     push @results, $file;       # Make list to return later
             }
@@ -170,11 +187,16 @@ C<`where'> utility, will return an array containing all the path names
 matching C<$short_exe_name>.
 
 
-=head1 Bugs
+=head1 Bugs and Caveats
 
 Not tested on VMS or MacOS, although there is platform specific code
 for those. Anyone who haves a second would be very kind to send me a
 report of how it went.
+
+File::Spec adds the current directory to the front of PATH if on
+Win32, VMS or MacOS. I have no knowledge of those so don't know if the
+current directory is searced first or not. Could someone please tell
+me?
 
 =head1 Author
 
@@ -197,7 +219,7 @@ the same terms as Perl itself.
 
 =head1 See Also
 
-L<File::Spec>, Perl Power Tools:
+L<File::Spec>, L<which(1)>, Perl Power Tools:
 http://www.perl.com/language/ppt/index.html .
 
 =cut
