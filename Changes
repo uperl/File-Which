@@ -1,6 +1,14 @@
 Revision history for File::Which.
 
-0.01  Sun Apr 14 23:05:37 2002
+0.02  Fri 19 Apr 02:52:15 CET 2002
+    - Some documentation changes
+    - Added where($short_exec_name) as an alias for
+      which($short_exec_name, { all => 1 }).
+      [Request from Jerrad Pierce <belg4mit (at) mit.edu>]
+    - Added the which option --all. Other options just bloat everything.
+    - Added `pwhich', perl-only replacement for `which'.
+
+0.01  Sun Apr 14 23:05:37 CET 2002
 	- original version; extracted from DocSet. Only plain which() with
 	  docs and tests. 
 

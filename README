@@ -1,4 +1,4 @@
-File::Which version 0.01
+File::Which version 0.02
 ========================
 
 File::Which is a portable implementation (in Perl) of `which', and can be
@@ -26,11 +26,8 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   File::Spec
+  File::HomeDir
 
-TODO
-
-In the future, I would like to add support for most options `which'
-supports, as well as a Perl-only replacement for `which'.
 
 COPYRIGHT AND LICENCE
 

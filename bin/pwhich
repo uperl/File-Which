@@ -1,0 +1,32 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+use File::Which;
+use Getopt::Std;
+
+my %opts = ();
+
+# Only -a supported for now.
+
+getopts('a', \%opts);
+
+my @files = @ARGV;
+
+unless(@files) {
+    print "usage: $0 [-a] file [files ...]\n";
+    exit;
+}
+
+my %which_opt = ();
+
+if($opts{a}) {
+    $which_opt{all} = 1;
+}
+
+unless($opts{a}) {
+    print map{ which($_, \%which_opt), "\n" } @files;
+} else {
+    print map { map { $_, "\n" } which($_, \%which_opt) } @files;
+}
+

@@ -3,12 +3,23 @@
 
 #########################
 
-# change 'tests => 1' to 'tests => last_test_to_print';
-
 use Test;
-BEGIN { plan tests => 2 };
+BEGIN { plan tests => 9 };
 use File::Which;
 ok(1);
+import File::Which qw(where);
+ok(ref(\&where), 'CODE');
 
-ok(which('perl'), qr/perl/);    # I would use $0, but apparently it's not guaranteed
-                                # to be an absolute path etc etc etc...
+# check that it returns undef if no file is passed
+ok(which(''), undef);
+
+ok(which('perl'), qr|\Q$^X|i);    # apparently $^X isn't guaranteed to be under path or anything.. let's just pray it works :)
+
+ok(which('non_existent_very_unlinkely_thingy_executable'), undef);
+ok(-x which('perl'), 1);
+
+my @result = which('perl', { all => 1 });
+ok($result[0], qr|\Q$^X|i);    # tests $opt->{all}
+ok(@result > 0, 1);
+ok(@result, scalar where('perl')); # should have as many elements.
+

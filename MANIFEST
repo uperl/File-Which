@@ -4,3 +4,4 @@ MANIFEST
 README
 test.pl
 Which.pm
+bin/pwhich
