@@ -5,7 +5,6 @@ WriteMakefile(
     'VERSION_FROM'	=> 'Which.pm', # finds $VERSION
     'PREREQ_PM'		=> {
                 File::Spec => 0.60,     # The version coming with perl-5.005_03
-                File::HomeDir => 0.05,
       },
     'EXE_FILES' => ['bin/pwhich'],
       ($] >= 5.005 ?   

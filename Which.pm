@@ -11,16 +11,16 @@ require Exporter;
 @EXPORT = qw(which);
 @EXPORT_OK = qw(where);
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use File::Spec;
-use File::HomeDir;          # exports home()
 use constant IS_WIN32 => $^O eq 'MSWin32';
 
 
 my @path_ext = ('');        # For Win32 systems, stores the extensions used for
                             # executable files
-                            # For others, the empty string is used because 'perl' . '' eq 'perl' => easier
+                            # For others, the empty string is used
+                            # because 'perl' . '' eq 'perl' => easier
 if (IS_WIN32) {
     if ($ENV{PATHEXT}) {    # WinNT
         push @path_ext, split ';', $ENV{PATHEXT};
@@ -39,7 +39,11 @@ sub which {
     
     for my $base (map { File::Spec->catfile($_, $exec) } File::Spec->path()) {
 
-        $base =~ s/~/home()/e;                  # Must eliminate ~, as File::Spec doesn't expand it.
+        if ($ENV{HOME} and not IS_WIN32) {
+            # only works on Unix, but that's
+            # normal: on Win32 the shell doesn't treat '~' specially.
+            $base =~ s/~/$ENV{HOME}/o;
+        }
 
         for my $ext (@path_ext) {
             my $file = $base.$ext;
@@ -71,7 +75,7 @@ __END__
 
 File::Which - Portable implementation of the `which' utility
 
-=head1 SYNOPSIS
+=head1 Synopsis
 
   use File::Which;      # exports which()
   use File::Which qw(which where);  # exports which() and where()
@@ -82,7 +86,7 @@ File::Which - Portable implementation of the `which' utility
   - Or -
   my @paths = which('perl', {all => 1 });
 
-=head1 DESCRIPTION
+=head1 Description
 
 C<File::Which> was created to be able to get the paths to executable programs
 on systems under which the `which' program wasn't implemented in the shell.
@@ -95,7 +99,7 @@ C<.bat> to identify them, C<File::Which> takes extra steps to assure that you
 will find the correct file (so for example, you might be searching for C<perl>,
 it'll try C<perl.exe>, C<perl.bat>, etc.)
 
-=head1 STEPS USED ON WIN32
+=head1 Steps Used on Win32
 
 =head2 Windows NT
 
@@ -112,7 +116,7 @@ you will find executable files there with the extensions C<.exe>, C<.bat> and
 under Win32 but does not find a C<PATHEXT> variable.
 
 
-=head1 FUNCTIONS
+=head1 Functions
 
 =head2 which($short_exe_name, \%opt)
 
@@ -125,7 +129,12 @@ If it finds an executable with the name you specified, C<which()> will return
 the absolute path leading to this executable (for example, C</usr/bin/perl> or
 C<C:\Perl\Bin\perl.exe>).
 
-if it does I<not> find the executable, it returns the empty string.
+If it does I<not> find the executable, it returns C<undef>.
+
+If C<$ENV{HOME}> is present, C<File::Which> will expand all instances
+of C<'~'> in the C<PATH>, replacing them with the value of
+C<$ENV{HOME}>. However, this will not occur on Win32, as the shell
+doesn't treat it specially there.
 
 C<which()> also accepts a hash reference with options: 
 
@@ -146,13 +155,13 @@ Same as C<which($short_exe_name, { all =E<gt> 1 })>. Same as the C<`where'> util
 will return an array containing all the path names matching C<$short_exe_name>.
 
 
-=head1 BUGS
+=head1 Bugs
 
 Has not been tested under MacOS. If anyone could give me the information needed
 for it to work on the Mac (how it searches the path, etc... although MacOs E<lt>
 X don't have a shell, so this might not really apply).
 
-=head1 AUTHOR
+=head1 Author
 
 Per Einar Ellefsen, E<lt>per.einar (at) skynet.beE<gt>
 
@@ -160,13 +169,13 @@ Originated in I<modperl-2.0/lib/Apache/Build.pm>. Changed for use in DocSet
 (for the mod_perl site) and Win32-awareness by me, with slight modifications
 by Stas Bekman, then extracted to create C<File::Which>.
 
-=head1 LICENSE
+=head1 License
 
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
-=head1 SEE ALSO
+=head1 See Also
 
-L<File::Spec>, L<File::HomeDir>.
+L<File::Spec>.
 
 =cut

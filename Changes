@@ -1,5 +1,11 @@
 Revision history for File::Which.
 
+0.03  Wed 24 Apr 14:48:50 CET 2002
+    - Changed the '~' handling: last version was buggy, it needs to
+      only replace it on Unix and if $ENV{HOME} exists, replacing it
+      then with $ENV{HOME} (removes File::HomeDir dependency).
+    - Added documentation to pwhich (you can run perldoc on it now)
+
 0.02  Fri 19 Apr 02:52:15 CET 2002
     - Some documentation changes
     - Added where($short_exec_name) as an alias for

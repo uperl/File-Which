@@ -1,14 +1,18 @@
 File::Which version 0.02
 ========================
 
-File::Which is a portable implementation (in Perl) of `which', and can be
-used to get the absolute filename of an executable program installed
-somewhere in your PATH, or just check for its existence.
+File::Which is a portable implementation (in Perl) of `which', and can
+be used to get the absolute filename of an executable program
+installed somewhere in your PATH, or just check for its existence. It
+includes the command-line utility `pwhich' which has the same function
+as `which'.
 
 INSTALLATION
 
 To install this module type the following:
 
+   tar zxvf File-Which-0.03.tar.gz
+   cd File-Which-0.03
    perl Makefile.PL
    make
    make test
@@ -26,12 +30,10 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   File::Spec
-  File::HomeDir
-
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2002 Per Einar Ellefsen
+Copyright (C) 2002 Per Einar Ellefsen <per.einar (at) skynet.be)
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

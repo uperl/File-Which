@@ -7,14 +7,16 @@ use Getopt::Std;
 
 my %opts = ();
 
-# Only -a supported for now.
-
 getopts('a', \%opts);
 
 my @files = @ARGV;
 
 unless(@files) {
-    print "usage: $0 [-a] file [files ...]\n";
+    print <<"EOS";
+usage: $0 [-a] programname [programname ...]
+      -a        Print all matches in PATH, not just the first.
+EOS
+          
     exit;
 }
 
@@ -25,8 +27,64 @@ if($opts{a}) {
 }
 
 unless($opts{a}) {
-    print map{ which($_, \%which_opt), "\n" } @files;
+    print 
+        map { 
+            (which($_, \%which_opt) || ''), "\n"
+        } @files;
 } else {
-    print map { map { $_, "\n" } which($_, \%which_opt) } @files;
+    print 
+        map { 
+            map { $_, "\n" } 
+                (which($_, \%which_opt) || '')
+            } @files;
 }
+
+=head1 NAME
+
+pwhich - Perl-only `which'
+
+=head1 Synopsis
+
+  $ pwhich perl
+  $ pwhich -a perl          # print all matches
+  $ pwhich perl perldoc ... # look for multiple programs
+
+=head1 Description
+
+`pwhich' is a command-line utility program for finding paths to other
+programs based on the user's C<PATH>. It is similar to the usualy Unix
+tool `which', and tries to emulate its functionality, but is written
+purely in Perl (uses the module C<File::Which>), so is portable.
+
+
+=head1 Calling syntax
+
+B<pwhich> [I<-a>] I<programname> [I<programnames ...>]
+
+=head2 Options
+
+=over
+
+=item -a
+
+The option I<-a> will make C<pwhich> print all matches found in the
+C<PATH> variable instead of just the first one. Each match is printed
+on a separate line.
+
+=back
+
+=head1 License
+
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 See Also
+
+L<perl>(1), L<File::Which>(3)
+
+=head1 Author
+
+Per Einar Ellefsen, E<lt>per.einar (at) skynet.beE<gt>
+
+=cut
 
