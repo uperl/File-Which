@@ -1,0 +1,41 @@
+File::Which version 0.01
+========================
+
+File::Which is a portable implementation (in Perl) of `which', and can be
+used to get the absolute filename of an executable program installed
+somewhere in your PATH, or just check for its existence.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+Using the CPAN shell:
+
+   perl -MCPAN -eshell
+   cpan> install File::Which
+   cpan> exit
+
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  File::Spec
+
+TODO
+
+In the future, I would like to add support for most options `which'
+supports, as well as a Perl-only replacement for `which'.
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2002 Per Einar Ellefsen
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself. 
+
