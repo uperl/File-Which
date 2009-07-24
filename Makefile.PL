@@ -1,13 +1,24 @@
+use 5.004;
+use strict;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    'NAME'		=> 'File::Which',
-    'VERSION_FROM'	=> 'Which.pm', # finds $VERSION
-    'PREREQ_PM'		=> {
-                'File::Spec' => 0.60,     # The version coming with perl-5.005_03
-      },
-    'EXE_FILES' => ['bin/pwhich'],
-      ($] >= 5.005 ?   
-      (ABSTRACT_FROM => 'Which.pm', # retrieve abstract from module
-       AUTHOR     => 'Per Einar Ellefsen <per.einar (at) skynet.be>') : ()),
+	'NAME'         => 'File::Which',
+	'VERSION_FROM' => 'lib/Which.pm',
+	'PREREQ_PM'    => {
+		'Exporter'    => 0,
+		'Getopt::Std' => 0,
+		'File::Spec'  => '0.60',
+		'Test::More'  => '0.80',
+	},
+	'EXE_FILES' => [
+		'script/pwhich',
+	],
+	( $] >= 5.005 ? (
+		ABSTRACT_FROM => 'lib/Which.pm', # retrieve abstract from module
+		AUTHOR        => 'Adam Kennedy <adamk@cpan.org>',
+	) : () ),
+	( $ExtUtils::MakeMaker::VERSION ge '6.31' ? (
+		LICENSE => 'perl',
+	) : () ),
 );
