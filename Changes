@@ -1,6 +1,6 @@
 Revision history for File::Which.
 
-1.06 Sat 25 Jul 2009
+1.06_01 Sat 25 Jul 2009
 	- Taking over this hugely old and very popular module to clean it
 	  up a bit.
 	- Moved from Test.pm to Test::More.
