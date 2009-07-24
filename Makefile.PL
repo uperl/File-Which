@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	'NAME'         => 'File::Which',
-	'VERSION_FROM' => 'lib/Which.pm',
+	'VERSION_FROM' => 'lib/File/Which.pm',
 	'PREREQ_PM'    => {
 		'Exporter'    => 0,
 		'Getopt::Std' => 0,
@@ -15,7 +15,7 @@ WriteMakefile(
 		'script/pwhich',
 	],
 	( $] >= 5.005 ? (
-		ABSTRACT_FROM => 'lib/Which.pm', # retrieve abstract from module
+		ABSTRACT_FROM => 'lib/File/Which.pm', # retrieve abstract from module
 		AUTHOR        => 'Adam Kennedy <adamk@cpan.org>',
 	) : () ),
 	( $ExtUtils::MakeMaker::VERSION ge '6.31' ? (
