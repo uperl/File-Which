@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 use File::Spec ();
 use File::Which qw(which where);
 
