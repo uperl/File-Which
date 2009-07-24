@@ -52,7 +52,7 @@ sub which {
 			push @results, $symbol;
 		}
 	}
-	if ( IS_MACOS ) {
+	if ( IS_MAC ) {
 		my @aliases = split /\,/, $ENV{Aliases};
 		foreach my $alias ( @aliases ) {
 			# This has not been tested!!
@@ -71,7 +71,7 @@ sub which {
 	}
 
 	my @path = File::Spec->path;
-	if ( IS_DOS or IS_VMS or IS_MACOS ) {
+	if ( IS_DOS or IS_VMS or IS_MAC ) {
 		unshift @path, File::Spec->curdir;
 	}
 
@@ -87,7 +87,7 @@ sub which {
 				-x _
 				or (
 					# MacOS doesn't mark as executable so we check -e
-					IS_MACOS
+					IS_MAC
 					||
 					(
 						IS_DOS
