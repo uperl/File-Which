@@ -217,7 +217,7 @@ me?
 
 Bugs should be reported via the CPAN bug tracker at
 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Config-Tiny>
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=File-Which>
 
 For other issues, contact the maintainer.
 
