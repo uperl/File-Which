@@ -16,8 +16,7 @@ WriteMakefile(
 		'script/pwhich',
 	],
 	( $] >= 5.005 ? (
-		ABSTRACT_FROM => 'lib/File/Which.pm', # retrieve abstract from module
-		AUTHOR        => 'Adam Kennedy <adamk@cpan.org>',
+		AUTHOR => 'Adam Kennedy <adamk@cpan.org>',
 	) : () ),
 	( $ExtUtils::MakeMaker::VERSION ge '6.31' ? (
 		LICENSE => 'perl',

@@ -148,12 +148,12 @@ C<File::Which> was created to be able to get the paths to executable programs
 on systems under which the `which' program wasn't implemented in the shell.
 
 C<File::Which> searches the directories of the user's C<PATH> (as returned by
-C<File::Spec-E<gt>path()>), looking for executable files having the name specified
-as a parameter to C<which()>. Under Win32 systems, which do not have a notion of
-directly executable files, but uses special extensions such as C<.exe> and
-C<.bat> to identify them, C<File::Which> takes extra steps to assure that you
-will find the correct file (so for example, you might be searching for C<perl>,
-it'll try F<perl.exe>, F<perl.bat>, etc.)
+C<File::Spec-E<gt>path()>), looking for executable files having the name
+specified as a parameter to C<which()>. Under Win32 systems, which do not have a
+notion of directly executable files, but uses special extensions such as C<.exe>
+and C<.bat> to identify them, C<File::Which> takes extra steps to assure that
+you will find the correct file (so for example, you might be searching for
+C<perl>, it'll try F<perl.exe>, F<perl.bat>, etc.)
 
 =head1 Steps Used on Win32, DOS, OS2 and VMS
 
@@ -162,7 +162,8 @@ it'll try F<perl.exe>, F<perl.bat>, etc.)
 Windows NT has a special environment variable called C<PATHEXT>, which is used
 by the shell to look for executable files. Usually, it will contain a list in
 the form C<.EXE;.BAT;.COM;.JS;.VBS> etc. If C<File::Which> finds such an
-environment variable, it parses the list and uses it as the different extensions.
+environment variable, it parses the list and uses it as the different
+extensions.
 
 =head2 Windows 9x and other ancient Win/DOS/OS2
 
