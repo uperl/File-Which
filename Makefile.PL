@@ -4,6 +4,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	'NAME'         => 'File::Which',
+	'ABSTRACT'     => 'Portable implementation of the "which" utility',
 	'VERSION_FROM' => 'lib/File/Which.pm',
 	'PREREQ_PM'    => {
 		'Exporter'    => 0,

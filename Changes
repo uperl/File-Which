@@ -1,5 +1,8 @@
 Revision history for File::Which.
 
+1.07 Tue 28 Jul 2009
+	- CPAN Testers looks good for 1.06_01, moving to production release
+
 1.06_01 Sat 25 Jul 2009
 	- Taking over this hugely old and very popular module to clean it
 	  up a bit.
