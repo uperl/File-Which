@@ -8,7 +8,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 10;
+use Test::More tests => 4;
 use Test::Script;
 use File::Which;
 
