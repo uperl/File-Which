@@ -13,7 +13,7 @@ use Test::Script;
 use File::Which;
 
 # Look for a very common program
-my $tool = 'perl2';
+my $tool = 'perl';
 my $path = which($tool);
 ok( defined $path, "Found path to $tool" );
 ok( $path, "Found path to $tool" );
