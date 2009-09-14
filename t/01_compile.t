@@ -7,6 +7,8 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 1;
+use Test::More tests => 2;
+use Test::Script;
 
 use_ok( 'File::Which' );
+script_compiles('script/pwhich');

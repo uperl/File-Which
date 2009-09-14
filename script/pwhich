@@ -7,7 +7,7 @@ use Getopt::Std ();
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '1.07';
+	$VERSION = '1.08';
 }
 
 # Handle options
@@ -26,7 +26,7 @@ This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 END_TEXT
 
-	exit;
+	exit(0);
 }
 
 unless ( @ARGV ) {
@@ -37,24 +37,27 @@ Usage: $0 [-a] [-v] programname [programname ...]
 
 END_TEXT
 
-	exit;
+	exit(0);
 }
 
 foreach my $file ( @ARGV ) {
 	my @result = $opts{a}
-		? which($file)
+		? File::Which::which($file)
 		# Need to force scalar
-		: scalar which($file);
+		: scalar File::Which::which($file);
 
 	# We might end up with @result = (undef) -> 1 elem
 	@result = () unless defined $result[0];
 	foreach my $result ( @result ) {
 		print "$result\n" if $result;
 	}
-	print STDERR "pwhich: no $file in PATH\n" unless @result;
+	unless ( @result ) {
+		print STDERR "pwhich: no $file in PATH\n";
+		exit(255);
+	}
 }
 
-exit;
+exit(0);
 
 __END__
 

@@ -1,5 +1,10 @@
 Revision history for File::Which.
 
+1.08 Tue 15 Sep 2009
+	- Fixing pwhich
+	- Adding a proper test for it
+	- Adds a dependency on Test::Script 1.08
+
 1.07 Tue 28 Jul 2009
 	- CPAN Testers looks good for 1.06_01, moving to production release
 

@@ -7,10 +7,11 @@ WriteMakefile(
 	'ABSTRACT'     => 'Portable implementation of the "which" utility',
 	'VERSION_FROM' => 'lib/File/Which.pm',
 	'PREREQ_PM'    => {
-		'Exporter'    => 0,
-		'Getopt::Std' => 0,
-		'File::Spec'  => '0.60',
-		'Test::More'  => '0.80',
+		'Exporter'     => 0,
+		'Getopt::Std'  => 0,
+		'File::Spec'   => '0.60',
+		'Test::More'   => '0.80',
+		'Test::Script' => '1.05',
 	},
 	'EXE_FILES' => [
 		'script/pwhich',
