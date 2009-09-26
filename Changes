@@ -1,5 +1,8 @@
 Revision history for File::Which.
 
+1.09 Sun 27 Sep 2009
+	- Set svn:executable for the exe files so cygwin tests work
+
 1.08 Tue 15 Sep 2009
 	- Fixing pwhich
 	- Adding a proper test for it
