@@ -210,7 +210,7 @@ report of how it went.
 
 File::Spec adds the current directory to the front of PATH if on
 Win32, VMS or MacOS. I have no knowledge of those so don't know if the
-current directory is searced first or not. Could someone please tell
+current directory is searched first or not. Could someone please tell
 me?
 
 =head1 SUPPORT
