@@ -10,9 +10,17 @@ WriteMakefile(
 		'Exporter'     => 0,
 		'Getopt::Std'  => 0,
 		'File::Spec'   => '0.60',
-		'Test::More'   => '0.80',
-		'Test::Script' => '1.05',
+		($ExtUtils::MakeMaker::VERSION lt '6.34' ? (
+			'Test::More'   => '0.80',
+			'Test::Script' => '1.05',
+		) : () ),
 	},
+	($ExtUtils::MakeMaker::VERSION ge '6.34' ? (
+		TEST_REQUIRES => {
+			'Test::More'   => '0.80',
+			'Test::Script' => '1.05',
+		},
+	) : () ),
 	'EXE_FILES' => [
 		'script/pwhich',
 	],
