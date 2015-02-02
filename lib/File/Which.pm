@@ -16,6 +16,7 @@ BEGIN {
 use constant IS_VMS => ($^O eq 'VMS');
 use constant IS_MAC => ($^O eq 'MacOS');
 use constant IS_DOS => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
+use constant IS_CYG => ($^O eq 'cygwin');
 
 # For Win32 systems, stores the extensions used for
 # executable files
@@ -32,6 +33,10 @@ if ( IS_DOS ) {
 	}
 } elsif ( IS_VMS ) {
 	push @PATHEXT, qw{.exe .com};
+} elsif ( IS_CYG ) {
+	# See this for more info
+	# http://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-exe
+	push @PATHEXT, split ';', $ENV{PATHEXT};
 }
 
 sub which {
@@ -89,7 +94,7 @@ sub which {
 					IS_MAC
 					||
 					(
-						IS_DOS
+						( IS_DOS or IS_CYG )
 						and
 						grep {
 							$file =~ /$_\z/i
