@@ -30,4 +30,12 @@ WriteMakefile(
 	( $ExtUtils::MakeMaker::VERSION ge '6.31' ? (
 		LICENSE => 'perl',
 	) : () ),
+
+	( $ExtUtils::MakeMaker::VERSION ge '6.46' ? (
+		META_MERGE => {
+			'meta-spec' => { version => 2 },
+			dynamic_config => 0,
+		},
+	) : () ),
+
 );
