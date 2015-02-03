@@ -36,7 +36,7 @@ if ( IS_DOS ) {
 } elsif ( IS_CYG ) {
 	# See this for more info
 	# http://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-exe
-	push @PATHEXT, split ';', $ENV{PATHEXT};
+	push @PATHEXT, qw{.exe .com};
 }
 
 sub which {
