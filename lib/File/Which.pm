@@ -220,9 +220,9 @@ me?
 
 =head1 SUPPORT
 
-Bugs should be reported via the CPAN bug tracker at
+Bugs should be reported via the GitHub issue tracker
 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=File-Which>
+L<https://github.com/plicease/File-Which/issues>
 
 For other issues, contact the maintainer.
 
@@ -233,15 +233,17 @@ For other issues, contact the maintainer.
 =item L<Devel::CheckBin>
 
 This module proports to "check that a command is available", but does not
-provide any documentation.
+provide any documentation on how you might use it.
 
 =back
 
 =head1 AUTHOR
 
-Adam Kennedy E<lt>adamk@cpan.orgE<gt>
+Current maintainer: Graham Ollis E<lt>plicease@cpan.orgE<gt>
 
-Per Einar Ellefsen E<lt>pereinar@cpan.orgE<gt>
+Previous maintainer: Adam Kennedy E<lt>adamk@cpan.orgE<gt>
+
+Original author: Per Einar Ellefsen E<lt>pereinar@cpan.orgE<gt>
 
 Originated in F<modperl-2.0/lib/Apache/Build.pm>. Changed for use in DocSet
 (for the mod_perl site) and Win32-awareness by me, with slight modifications
