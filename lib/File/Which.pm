@@ -74,6 +74,9 @@ sub which {
 		}
 	}
 
+	return $exec
+	        if !IS_VMS and !IS_MAC and !IS_DOS and $exec =~ /\// and -f $exec and -x $exec;
+
 	my @path = File::Spec->path;
 	if ( IS_DOS or IS_VMS or IS_MAC ) {
 		unshift @path, File::Spec->curdir;
