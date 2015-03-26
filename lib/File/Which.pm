@@ -210,16 +210,11 @@ Same as C<which($short_exe_name)> in array context. Same as the
 C<`where'> utility, will return an array containing all the path names
 matching C<$short_exe_name>.
 
-=head1 BUGS AND CAVEATS
+=head1 CAVEATS
 
 Not tested on VMS or MacOS, although there is platform specific code
 for those. Anyone who haves a second would be very kind to send me a
 report of how it went.
-
-File::Spec adds the current directory to the front of PATH if on
-Win32, VMS or MacOS. I have no knowledge of those so don't know if the
-current directory is searched first or not. Could someone please tell
-me?
 
 =head1 SUPPORT
 
