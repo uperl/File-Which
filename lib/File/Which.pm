@@ -239,7 +239,7 @@ Command line interface to this module.
 
 =item L<Devel::CheckBin>
 
-This module proports to "check that a command is available", but does not
+This module purports to "check that a command is available", but does not
 provide any documentation on how you might use it.
 
 =back
