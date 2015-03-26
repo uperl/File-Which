@@ -9,7 +9,8 @@ print STDERR "Please install App::pwhich instead\n";
 
 exit App::pwhich::main(@ARGV);
 
-package App::pwhich;
+package
+  App::pwhich;
 
 use strict;
 use File::Which ();
