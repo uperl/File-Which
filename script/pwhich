@@ -3,6 +3,10 @@
 use 5.005003;
 use strict;
 
+print STDERR "The pwhich bundled with File-Which is deprecated\n";
+print STDERR "It will be removed from File-Which, but not before April 30, 2015\n";
+print STDERR "Please install App::pwhich instead\n";
+
 exit App::pwhich::main(@ARGV);
 
 package App::pwhich;
