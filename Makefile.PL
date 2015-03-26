@@ -2,6 +2,13 @@ use 5.005003;
 use strict;
 use ExtUtils::MakeMaker;
 
+my @exe_files = ('script/pwhich');
+
+if(eval q{ use App::pwhich 1.14; 1 })
+{
+  @exe_files = ();
+}
+
 WriteMakefile(
 	'NAME'         => 'File::Which',
 	'ABSTRACT'     => 'Portable implementation of the "which" utility',
@@ -15,18 +22,14 @@ WriteMakefile(
 		'File::Spec'   => '0.60',
 		($ExtUtils::MakeMaker::VERSION lt '6.34' ? (
 			'Test::More'   => '0.80',
-			'Test::Script' => '1.05',
 		) : () ),
 	},
 	($ExtUtils::MakeMaker::VERSION ge '6.34' ? (
 		TEST_REQUIRES => {
 			'Test::More'   => '0.80',
-			'Test::Script' => '1.05',
 		},
 	) : () ),
-	'EXE_FILES' => [
-		'script/pwhich',
-	],
+	'EXE_FILES' => \@exe_files,
 	( $] >= 5.005 ? (
 		AUTHOR => 'Adam Kennedy <adamk@cpan.org>',
 	) : () ),

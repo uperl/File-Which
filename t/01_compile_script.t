@@ -5,7 +5,12 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 1;
-use Test::Script;
+use Test::More;
+
+BEGIN {
+  plan skip_all => 'test requires Test::Script' unless eval q{ use Test::Script; 1 };
+}
+
+plan tests => 1;
 
 script_compiles('script/pwhich');
