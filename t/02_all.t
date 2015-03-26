@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 use 5.005003;
 use strict;
 BEGIN {
