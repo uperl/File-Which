@@ -226,6 +226,17 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=File-Which>
 
 For other issues, contact the maintainer.
 
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Devel::CheckBin>
+
+This module proports to "check that a command is available", but does not
+provide any documentation.
+
+=back
+
 =head1 AUTHOR
 
 Adam Kennedy E<lt>adamk@cpan.orgE<gt>
