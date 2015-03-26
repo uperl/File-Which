@@ -230,6 +230,10 @@ For other issues, contact the maintainer.
 
 =over 4
 
+=item L<pwhich>
+
+Command line interface to this module.
+
 =item L<Devel::CheckBin>
 
 This module proports to "check that a command is available", but does not

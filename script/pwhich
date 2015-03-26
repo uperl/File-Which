@@ -44,17 +44,36 @@ on a separate line.
 
 =item -v
 
-Prints version (of C<File::Which>) and copyright notice and exits.
+Prints version (of L<File::Which>) and copyright notice and exits.
 
 =back
 
 =head1 SUPPORT
 
-Bugs should be reported via the CPAN bug tracker at
+Bugs should be reported via the GitHub issue tracker
 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=File-Which>
+L<https://github.com/plicease/File-Which/issues>
 
 For other issues, contact the maintainer.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<File::Which>
+
+Perl API for L<pwhich>
+
+=item L<App::pwhich>
+
+Guts of this script.
+
+=item L<Devel::CheckBin>
+
+This module proports to "check that a command is available", but does not
+provide any documentation on how you might use it.
+
+=back
 
 =head1 AUTHOR
 
@@ -80,9 +99,5 @@ Some parts copyright 2009 Adam Kennedy.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-=head1 SEE ALSO
-
-L<perl>, L<File::Which>, L<which(1)>
 
 =cut
