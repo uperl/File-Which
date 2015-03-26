@@ -58,9 +58,9 @@ END_TEXT
       print STDERR "pwhich: no $file in PATH\n";
       return 1;
     }
-
-    return 0;
   }
+  
+  return 0;
 }
 
 1;
