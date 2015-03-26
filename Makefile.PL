@@ -38,6 +38,17 @@ WriteMakefile(
 		META_MERGE => {
 			'meta-spec' => { version => 2 },
 			dynamic_config => 0,
+			resources => {
+				bugtracker => {
+					web => 'https://github.com/plicease/File-Which/issues',
+				},
+				homepage => 'https://metacpan.org/pod/File::Which',
+				repository => {
+					type => 'git',
+					url  => 'https://github.com/plicease/File-Which.git',
+					web  => 'https://github.com/plicease/File-Which',
+				},
+			},
 		},
 	) : () ),
 
