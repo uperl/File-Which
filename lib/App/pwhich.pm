@@ -6,7 +6,7 @@ use Getopt::Std ();
 
 use vars qw{$VERSION};
 BEGIN {
-  $VERSION = '1.10';
+  $VERSION = '1.11';
 }
 
 sub main

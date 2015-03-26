@@ -1,5 +1,8 @@
 Revision history for File::Which.
 
+1.11 Thu 26 Mar 2015
+  - Support for relative and fully qualified paths in Unix (gh#2)
+
 1.10 Thu 26 Mar 2015
   - Test::Script is now a test instead of runtime requirement
     It will be entirely removed as a prerequisite in a subsequent
