@@ -1,4 +1,5 @@
 Changes
+lib/App/pwhich.pm
 lib/File/Which.pm
 LICENSE
 Makefile.PL
@@ -6,9 +7,11 @@ MANIFEST			This list of files
 README
 script/pwhich
 t/01_compile.t
+t/01_compile_script.t
 t/02_all.t
 t/03_simple.t
 t/04_pwhich.t
+t/04_pwhich_script.t
 t/test-bin/all
 t/test-bin/all.bat
 t/test-bin/all.exe
