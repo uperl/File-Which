@@ -1,5 +1,4 @@
 Changes
-lib/App/pwhich.pm
 lib/File/Which.pm
 LICENSE
 Makefile.PL
