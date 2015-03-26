@@ -2,6 +2,7 @@
 
 # Check the pwhich script by confirming it matches the function result
 
+use 5.005003;
 use strict;
 BEGIN {
 	$|  = 1;

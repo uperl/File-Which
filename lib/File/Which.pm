@@ -1,6 +1,6 @@
 package File::Which;
 
-use 5.004;
+use 5.005003;
 use strict;
 use Exporter   ();
 use File::Spec ();

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use 5.004;
+use 5.005003;
 use strict;
 use File::Which ();
 use Getopt::Std ();

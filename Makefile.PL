@@ -1,4 +1,4 @@
-use 5.004;
+use 5.005003;
 use strict;
 use ExtUtils::MakeMaker;
 
@@ -6,6 +6,9 @@ WriteMakefile(
 	'NAME'         => 'File::Which',
 	'ABSTRACT'     => 'Portable implementation of the "which" utility',
 	'VERSION_FROM' => 'lib/File/Which.pm',
+	( $ExtUtils::MakeMaker::VERSION ge '6.48' ? (
+	        'MIN_PERL_VERSION' => '5.005003',
+	) : () ),
 	'PREREQ_PM'    => {
 		'Exporter'     => 0,
 		'Getopt::Std'  => 0,
