@@ -1,5 +1,17 @@
 Revision history for File::Which.
 
+1.10 Thu 26 Mar 2015
+  - Test::Script is now a test instead of runtime requirement
+    It will be entirely removed as a prerequisite in a subsequent
+    release
+  - Will now find .exe and .com files (as it should) on cygwin (rt83146)
+  - Declared required Perl version is now 5.005003
+  - Updated repository and maintainer information.  Source for this
+    dist now lives on GitHub
+  - New module App::pwhich contains the guts of pwhich.  It will be moved
+    into a separate dist in the near future.  pwhich will be deprecated
+    and removed from this dist in the near future.
+
 1.09 Sun 27 Sep 2009
 	- Set svn:executable for the exe files so cygwin tests work
 
