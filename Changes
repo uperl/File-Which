@@ -1,5 +1,9 @@
 Revision history for File::Which.
 
+1.12 Thu 26 Mar 2015
+  - Fixed bug in pwhich introduced in version 1.10 where only the
+    first file was searched for
+
 1.11 Thu 26 Mar 2015
   - Support for relative and fully qualified paths in Unix (gh#2)
 

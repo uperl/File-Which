@@ -7,7 +7,7 @@ use File::Spec ();
 
 use vars qw{$VERSION @ISA @EXPORT @EXPORT_OK};
 BEGIN {
-	$VERSION   = '1.11';
+	$VERSION   = '1.12';
 	@ISA       = 'Exporter';
 	@EXPORT    = 'which';
 	@EXPORT_OK = 'where';
