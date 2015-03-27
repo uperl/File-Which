@@ -232,6 +232,13 @@ For other issues, contact the maintainer.
 
 Command line interface to this module.
 
+=iten L<IPC::Cmd>
+
+Comes with a C<can_run> function with slightly different semantics that
+the traditional UNIX where.  It will find executables in the current
+directory, even though the current directory is not searched for by
+default on Unix.
+
 =item L<Devel::CheckBin>
 
 This module purports to "check that a command is available", but does not
