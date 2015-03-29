@@ -1,9 +1,13 @@
 Revision history for File::Which.
 
-1.15 Sun 29 Mar 29 2015
+1.16 Sun 29 Mar 2015
+  - Remove use Test::Script from tests that escaped when this requirement
+    became optional.
+
+1.15 Sun 29 Mar 2015
   - Fixed small but important POD error
 
-1.14 Sun 29 Mar 29 2015
+1.14 Sun 29 Mar 2015
   - App::pwhich is no longer bundled with File::Which and included
     in its own distribution.
   - pwhich that comes with this distribution is deprecated, and will
