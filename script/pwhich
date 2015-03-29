@@ -18,7 +18,7 @@ use Getopt::Std ();
 
 use vars qw{$VERSION};
 BEGIN {
-  $VERSION = '1.12';
+  $VERSION = '1.14';
 }
 
 sub main
@@ -91,6 +91,10 @@ pwhich - Perl-only `which'
   $ pwhich -a perl perldoc ...
 
 =head1 DESCRIPTION
+
+The pwhich bundled with File-Which is deprecated
+It will be removed from File-Which, but not before April 30, 2015
+Please install L<App::pwhich> instead
 
 `pwhich' is a command-line utility program for finding paths to other
 programs based on the user's C<PATH>. It is similar to the usually Unix

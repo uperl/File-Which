@@ -1,5 +1,17 @@
 Revision history for File::Which.
 
+1.14 Sun 29 Mar 29 2015
+  - App::pwhich is no longer bundled with File::Which and included
+    in its own distribution.
+  - pwhich that comes with this distribution is deprecated, and will
+    report a warning if you try to use it, you should insted install
+    App::pwhich.
+  - pwhich that comes with this distribution will not be installed if
+    App::pwhich 1.14 or better is already installed.
+  - pwhich will be removed from this distribution, but not before
+    30 April 2015.
+  - Make Test::Script an optional dependency
+
 1.12 Thu 26 Mar 2015
   - Fixed bug in pwhich introduced in version 1.10 where only the
     first file was searched for
