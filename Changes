@@ -1,5 +1,6 @@
 Revision history for File::Which.
 
+1.15 Sun 29 Mar 29 2015
   - Fixed small but important POD error
 
 1.14 Sun 29 Mar 29 2015
