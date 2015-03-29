@@ -8,7 +8,6 @@ BEGIN {
 }
 
 use Test::More tests => 3;
-use Test::Script;
 use File::Which;
 
 # Look for a very common program

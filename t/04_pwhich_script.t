@@ -8,7 +8,6 @@ BEGIN {
 }
 
 use Test::More;
-use Test::Script;
 use File::Which;
 
 BEGIN {
