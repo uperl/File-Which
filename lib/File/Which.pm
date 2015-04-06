@@ -14,28 +14,49 @@ use File::Spec ();
  use File::Which;                  # exports which()
  use File::Which qw(which where);  # exports which() and where()
  
- my $exe_path = which('perldoc');
+ my $exe_path = which 'perldoc';
  
- my @paths = where('perl');
+ my @paths = where 'perl';
  # Or
- my @paths = which('perl'); # an array forces search for all of them
+ my @paths = which 'perl'; # an array forces search for all of them
 
 =head1 DESCRIPTION
 
-C<File::Which> was created to be able to get the paths to executable programs
-on systems under which the `which' program wasn't implemented in the shell.
+L<File::Which> finds the full or relative paths to executable programs on
+the system.  This is normally the function of C<which> utility.  C<which> is
+typically implemented as either a program or a built in shell command.  On
+some platforms, such as Microsoft Windows it is not provided as part of the
+core operating system.  This module provides a consistent API to this
+functionality regardless of the underlying platform.
 
-C<File::Which> searches the directories of the user's C<PATH> (as returned by
-C<File::Spec-E<gt>path()>), looking for executable files having the name
-specified as a parameter to C<which()>. Under Win32 systems, which do not have a
-notion of directly executable files, but uses special extensions such as C<.exe>
-and C<.bat> to identify them, C<File::Which> takes extra steps to assure that
-you will find the correct file (so for example, you might be searching for
-C<perl>, it'll try F<perl.exe>, F<perl.bat>, etc.)
+The focus of this module is correctness and portability.  As a consequence
+platforms where the current directory is implicitly part of the search path
+such as Microsoft Windows will find executables in the current directory,
+whereas on platforms such as UNIX where this is not the case executables 
+in the current directory will only be found if the current directory is
+explicitly added to the path.
+
+If you need a portable C<which> on the command line in an environment that
+does not provide it, install L<App::pwhich> which provides a command line
+interface to this API.
 
 =head2 Implementations
 
-=head3 Windows NT
+L<File::Which> searches the directories of the user's C<PATH> (the current
+implementation uses L<File::Spec#path> to determine the correct C<PATH>),
+looking for executable files having the name specified as a parameter to
+L</which>. Under Win32 systems, which do not have a notion of directly
+executable files, but uses special extensions such as C<.exe> and C<.bat>
+to identify them, C<File::Which> takes extra steps to assure that
+you will find the correct file (so for example, you might be searching for
+C<perl>, it'll try F<perl.exe>, F<perl.bat>, etc.)
+
+=head3 Linux, *BSD and other UNIXes
+
+There should not be any surprises here.  The current directory will not be
+searched unless it is explicitly added to the path.
+
+=head3 Modern Windows (ie, NT, XP, Vista, 7, 8, 10 etc)
 
 Windows NT has a special environment variable called C<PATHEXT>, which is used
 by the shell to look for executable files. Usually, it will contain a list in
@@ -43,16 +64,25 @@ the form C<.EXE;.BAT;.COM;.JS;.VBS> etc. If C<File::Which> finds such an
 environment variable, it parses the list and uses it as the different
 extensions.
 
-=head3 Windows 9x and other ancient Win/DOS/OS2
+=head3 Windows 95, 98, ME, MS-DOS, OS/2
 
 This set of operating systems don't have the C<PATHEXT> variable, and usually
 you will find executable files there with the extensions C<.exe>, C<.bat> and
 (less likely) C<.com>. C<File::Which> uses this hardcoded list if it's running
 under Win32 but does not find a C<PATHEXT> variable.
 
+As of 2015 none of these platforms are tested frequently (or perhaps ever),
+but the current maintainer is determined not to intentionally remove support
+for older operating systems.
+
 =head3 VMS
 
 Same case as Windows 9x: uses C<.exe> and C<.com> (in that order).
+
+As of 2015 the current maintainer does not test on VMS, and is in fact not
+certain it has ever been tested on VMS.  If this platform is important to you
+and you can help me verify and or support it on that platform please contact
+me.
 
 =cut
 
@@ -90,8 +120,8 @@ if ( IS_DOS ) {
 
 =head2 which
 
- my $path = which($short_exe_name);
- my @paths = which($short_exe_name);
+ my $path = which $short_exe_name;
+ my @paths = which $short_exe_name;
 
 Exported by default.
 
@@ -109,7 +139,7 @@ matches.
 
 =cut
 
-sub which {
+sub which ($) {
   my ($exec) = @_;
 
   return undef unless $exec;
@@ -195,17 +225,17 @@ sub which {
 
 =head2 where
 
- my @paths = where($short_exe_name);
+ my @paths = where $short_exe_name;
 
 Not exported by default.
 
-Same as C<which($short_exe_name)> in array context. Same as the
-C<`where'> utility, will return an array containing all the path names
+Same as L</which> in array context. Same as the
+C<where> utility, will return an array containing all the path names
 matching C<$short_exe_name>.
 
 =cut
 
-sub where {
+sub where ($) {
   # force wantarray
   my @res = which($_[0]);
   return @res;
