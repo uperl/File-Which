@@ -1,11 +1,6 @@
-# Check the pwhich script by confirming it matches the function result
-
-use 5.005003;
+use 5.008001;
 use strict;
-BEGIN {
-	$|  = 1;
-	$^W = 1;
-}
+use warnings;
 
 use Test::More tests => 3;
 use File::Which;

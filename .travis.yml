@@ -1,0 +1,16 @@
+language: perl
+
+install:
+  - perlbrew list
+
+perl:
+  - "5.8"
+  - "5.10"
+  - "5.12"
+  - "5.14"
+  - "5.16"
+  - "5.18"
+  - "5.20"
+
+script:
+  - prove -lv t

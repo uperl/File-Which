@@ -1,9 +1,6 @@
-use 5.005003;
+use 5.008001;
 use strict;
-BEGIN {
-	$|  = 1;
-	$^W = 1;
-}
+use warnings;
 
 use Test::More tests => 4;
 use File::Spec ();
@@ -16,14 +13,14 @@ ok( -d $test_bin, 'Found test-bin' );
 # Set up for running the test application
 local $ENV{PATH} = $test_bin;
 unless (
-	File::Which::IS_VMS
-	or
-	File::Which::IS_MAC
-	or
-	File::Which::IS_DOS
+  File::Which::IS_VMS
+  or
+  File::Which::IS_MAC
+  or
+  File::Which::IS_DOS
 ) {
-	my $all = File::Spec->catfile( $test_bin, 'all' );
-	chmod 0755, $all;
+  my $all = File::Spec->catfile( $test_bin, 'all' );
+  chmod 0755, $all;
 }
 
 my @result = which('all');
@@ -32,7 +29,7 @@ ok( scalar(@result), 'Found at least one result' );
 
 # Should have as many elements.
 is(
-	scalar(@result),
-	scalar(where('all')),
-	'Scalar which result matches where result',
+  scalar(@result),
+  scalar(where('all')),
+  'Scalar which result matches where result',
 );

@@ -1,4 +1,6 @@
-Revision history for File::Which.
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 1.16 Sun 29 Mar 2015
   - Remove use Test::Script from tests that escaped when this requirement
