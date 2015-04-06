@@ -12,6 +12,7 @@ pod_spelling_system:
     - OS2
     - Stas
     - Win32
+    - XP
 
 pod_coverage:
   skip: 0

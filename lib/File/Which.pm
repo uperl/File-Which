@@ -56,7 +56,7 @@ C<perl>, it'll try F<perl.exe>, F<perl.bat>, etc.)
 There should not be any surprises here.  The current directory will not be
 searched unless it is explicitly added to the path.
 
-=head3 Modern Windows (ie, NT, XP, Vista, 7, 8, 10 etc)
+=head3 Modern Windows (including NT, XP, Vista, 7, 8, 10 etc)
 
 Windows NT has a special environment variable called C<PATHEXT>, which is used
 by the shell to look for executable files. Usually, it will contain a list in

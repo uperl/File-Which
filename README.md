@@ -49,7 +49,7 @@ you will find the correct file (so for example, you might be searching for
 There should not be any surprises here.  The current directory will not be
 searched unless it is explicitly added to the path.
 
-### Modern Windows (ie, NT, XP, Vista, 7, 8, 10 etc)
+### Modern Windows (including NT, XP, Vista, 7, 8, 10 etc)
 
 Windows NT has a special environment variable called `PATHEXT`, which is used
 by the shell to look for executable files. Usually, it will contain a list in
