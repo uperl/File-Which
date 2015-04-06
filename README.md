@@ -142,13 +142,13 @@ For other issues, contact the maintainer.
 
 # AUTHORS
 
-- Per Einar Ellefsen
+- Per Einar Ellefsen <pereinar@cpan.org>
 - Adam Kennedy <adamk@cpan.org>
 - Graham Ollis <plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2002 by Graham Ollis.
+This software is copyright (c) 2002 by Per Einar Ellefsen <pereinar@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
