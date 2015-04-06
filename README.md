@@ -110,7 +110,7 @@ matching `$short_exe_name`.
 
 # CAVEATS
 
-Not tested on VMS or MacOS, although there is platform specific code
+Not tested on VMS although there is platform specific code
 for those. Anyone who haves a second would be very kind to send me a
 report of how it went.
 
