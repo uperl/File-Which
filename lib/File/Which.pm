@@ -64,6 +64,17 @@ the form C<.EXE;.BAT;.COM;.JS;.VBS> etc. If C<File::Which> finds such an
 environment variable, it parses the list and uses it as the different
 extensions.
 
+=head3 Cygwin
+
+Cygwin provides a Unix-like environment for Microsoft Windows users.  In most
+ways it works like other Unix and Unix-like environments, but in a few key
+aspects it works like Windows.  As with other Unix environments, the current
+directory is not included in the search unless it is explicitly included in
+the search path.  Like on Windows, files with C<.EXE> or <.BAT> extensions will
+be discovered even if they are not part of the query.  C<.COM> or extensions
+specified using the C<PATHEXT> environment variable will NOT be discovered
+without the fully qualified name, however.
+
 =head3 Windows 95, 98, ME, MS-DOS, OS/2
 
 This set of operating systems don't have the C<PATHEXT> variable, and usually
