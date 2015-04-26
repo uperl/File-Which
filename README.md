@@ -135,7 +135,7 @@ For other issues, contact the maintainer.
 
 # SEE ALSO
 
-- [pwhich](https://metacpan.org/pod/pwhich)
+- [pwhich](https://metacpan.org/pod/pwhich), [App::pwhich](https://metacpan.org/pod/App::pwhich)
 
     Command line interface to this module.
 

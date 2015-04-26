@@ -272,7 +272,7 @@ For other issues, contact the maintainer.
 
 =over 4
 
-=item L<pwhich>
+=item L<pwhich>, L<App::pwhich>
 
 Command line interface to this module.
 
