@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.17      2015-05-01 07:06:00 -0400
   - Removed pwhich as forwarned in 1.10
   - Migrated to Dist::Zilla (relevant only for development)
   - Minimum supported Perl is 5.8.1
