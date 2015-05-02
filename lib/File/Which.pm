@@ -3,7 +3,7 @@ package File::Which;
 use 5.008001;
 use strict;
 use warnings;
-use Exporter   ();
+use Exporter 5.57 'import';
 use File::Spec ();
 
 # ABSTRACT: Perl implementation of the which utility as an API
@@ -97,7 +97,6 @@ me.
 
 =cut
 
-our @ISA       = 'Exporter';
 our @EXPORT    = 'which';
 our @EXPORT_OK = 'where';
 
