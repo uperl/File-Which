@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.18      2015-05-04 15:35:40 -0400
   - Remove prototypes (gh#6)
 
 1.17      2015-05-01 07:06:00 -0400
