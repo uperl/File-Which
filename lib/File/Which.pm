@@ -152,7 +152,7 @@ matches.
 
 =cut
 
-sub which ($) {
+sub which {
   my ($exec) = @_;
 
   return undef unless $exec;
@@ -248,7 +248,7 @@ matching C<$short_exe_name>.
 
 =cut
 
-sub where ($) {
+sub where {
   # force wantarray
   my @res = which($_[0]);
   return @res;
