@@ -255,6 +255,11 @@ sub where {
 
 =head1 CAVEATS
 
+This module is fully supported back to Perl 5.8.1.  It may work on 5.8.0.  
+It should work on Perl 5.6.x and I may even test on 5.6.2.  I will accept
+patches to maintain compatability for such older Perls, but you may
+need to fix it on 5.6.x / 5.8.0 and send me a patch.
+
 Not tested on VMS although there is platform specific code
 for those. Anyone who haves a second would be very kind to send me a
 report of how it went.

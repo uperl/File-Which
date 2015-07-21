@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Relax required Perl back to 5.6.x as this module is upriver to
+    a large number of modules
 
 1.18      2015-05-04 15:35:40 -0400
   - Remove prototypes (gh#6)
