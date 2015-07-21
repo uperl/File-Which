@@ -100,12 +100,10 @@ our @ISA       = 'Exporter';
 our @EXPORT    = 'which';
 our @EXPORT_OK = 'where';
 
-use constant {
-  IS_VMS => ($^O eq 'VMS'),
-  IS_MAC => ($^O eq 'MacOS'),
-  IS_DOS => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2'),
-  IS_CYG => ($^O eq 'cygwin'),
-};
+use constant IS_VMS => ($^O eq 'VMS');
+use constant IS_MAC => ($^O eq 'MacOS');
+use constant IS_DOS => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
+use constant IS_CYG => ($^O eq 'cygwin');
 
 # For Win32 systems, stores the extensions used for
 # executable files
