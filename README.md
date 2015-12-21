@@ -1,4 +1,4 @@
-# File::Which
+# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which)
 
 Perl implementation of the which utility as an API
 
@@ -160,13 +160,13 @@ For other issues, contact the maintainer.
 
 # AUTHORS
 
-- Per Einar Ellefsen <pereinar@cpan.org>
-- Adam Kennedy <adamk@cpan.org>
-- Graham Ollis <plicease@cpan.org>
+- Per Einar Ellefsen &lt;pereinar@cpan.org>
+- Adam Kennedy &lt;adamk@cpan.org>
+- Graham Ollis &lt;plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2002 by Per Einar Ellefsen <pereinar@cpan.org>.
+This software is copyright (c) 2002 by Per Einar Ellefsen &lt;pereinar@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
