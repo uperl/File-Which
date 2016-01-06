@@ -1,4 +1,4 @@
-# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which)
+# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which) [![Build status](https://ci.appveyor.com/api/projects/status/rxvw61235dcy61gq/branch/master?svg=true)](https://ci.appveyor.com/project/plicease/File-Which/branch/master)
 
 Perl implementation of the which utility as an API
 
