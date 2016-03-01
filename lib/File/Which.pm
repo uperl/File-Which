@@ -152,7 +152,8 @@ matches.
 sub which {
   my ($exec) = @_;
 
-  return undef unless $exec;
+  return undef unless defined $exec;
+  return undef if $exec eq '';
 
   my $all = wantarray;
   my @results = ();

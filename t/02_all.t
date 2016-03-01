@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 6;
 use File::Spec ();
 use File::Which qw(which where);
 
@@ -31,4 +31,19 @@ is(
   scalar(@result),
   scalar(where('all')),
   'Scalar which result matches where result',
+);
+
+my $zero = which '0';
+
+ok(
+  $zero,
+  "zero = $zero"
+);
+  
+my $empty_string = which '';
+
+is(
+  $empty_string,
+  undef,
+  "empty string"
 );
