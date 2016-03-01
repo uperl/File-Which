@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+1.20      2016-03-01 15:06:54 -0500
+  - Fix bug where executable named "0" would not be found (gh#7)
+
 1.19      2015-07-21 09:23:54 -0400
   - Relax required Perl back to 5.6.x as this module is upriver to
     a large number of modules
