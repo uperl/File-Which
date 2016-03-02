@@ -3,6 +3,7 @@ use warnings;
 use Test::More tests => 10;
 use File::Spec  ();
 use File::Which qw{which where};
+use Env qw( @PATH );
 
 use constant IS_VMS    => ($^O eq 'VMS');
 use constant IS_MAC    => ($^O eq 'MacOS');
@@ -20,11 +21,12 @@ is(
 );
 
 # Where is the test application
-my $test_bin = File::Spec->catdir( 't', 'test-bin' );
+my $test_bin = File::Spec->catdir( 'corpus', IS_DOS ? 'test-bin-win' : 'test-bin-unix' );
 ok( -d $test_bin, 'Found test-bin' );
 
 # Set up for running the test application
-local $ENV{PATH} = $test_bin;
+@PATH = $test_bin;
+push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if IS_CYGWIN;
 unless (
   File::Which::IS_VMS
   or
@@ -38,8 +40,8 @@ unless (
 
 SKIP: {
   skip("Not on DOS-like filesystem", 3) unless IS_DOS;
-  is( lc scalar which('test1'), 't\test-bin\test1.exe', 'Looking for test1.exe' );
-  is( lc scalar which('test2'), 't\test-bin\test2.bat', 'Looking for test2.bat' );
+  is( lc scalar which('test1'), 'corpus\test-bin-win\test1.exe', 'Looking for test1.exe' );
+  is( lc scalar which('test2'), 'corpus\test-bin-win\test2.bat', 'Looking for test2.bat' );
   is( scalar which('test3'), undef, 'test3 returns undef' );
 }
 
@@ -60,7 +62,7 @@ SKIP: {
   # Cygwin: should make test1.exe transparent
   is(
     scalar(which('test1')),
-    File::Spec->catfile( $test_bin, 'test1' ),
+    File::Spec->catfile( 'corpus', 'test-bin-win', 'test1' ),
     'Looking for test1 on Cygwin: transparent to test1.exe',
   );
   is(

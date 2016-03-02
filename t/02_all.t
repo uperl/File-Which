@@ -1,16 +1,17 @@
 use strict;
 use warnings;
-
+use Env qw( @PATH );
 use Test::More tests => 6;
 use File::Spec ();
 use File::Which qw(which where);
 
 # Where is the test application
-my $test_bin = File::Spec->catdir( 't', 'test-bin' );
+my $test_bin = File::Spec->catdir( 'corpus', $^O =~ /^(MSWin32|dos|os2)$/ ? 'test-bin-win' : 'test-bin-unix' );
 ok( -d $test_bin, 'Found test-bin' );
 
 # Set up for running the test application
-local $ENV{PATH} = $test_bin;
+@PATH = ($test_bin);
+push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if $^O eq 'cygwin';
 unless (
   File::Which::IS_VMS
   or

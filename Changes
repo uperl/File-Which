@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Workaround for nutty cygwin filesystem rules
 
 1.20      2016-03-01 15:06:54 -0500
   - Fix bug where executable named "0" would not be found (gh#7)
