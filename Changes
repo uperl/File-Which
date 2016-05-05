@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Support for MSYS2
 
 1.21      2016-03-02 14:20:43 -0500
   - Workaround for nutty cygwin filesystem rules
