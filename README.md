@@ -160,9 +160,12 @@ For other issues, contact the maintainer.
     on modern Unix).
 
     `can_run` converts directory path name to the 8.3 version on Windows using
-    `Win32::GetShortPathName` in some cases.  This is useful for tools that just
-    need to run something using `system` in scalar mode, but may be inconvenient
-    for tools like [App::pwhich](https://metacpan.org/pod/App::pwhich) where user readability is a premium.
+    `Win32::GetShortPathName` in some cases.  This is frequently useful for tools
+    that just need to run something using `system` in scalar mode, but may be
+    inconvenient for tools like [App::pwhich](https://metacpan.org/pod/App::pwhich) where user readability is a premium.
+    Relying on `Win32::GetShortPathName` to produce filenames without spaces
+    is problematic, as 8.3 filenames can be turned off with tweaks to the
+    registry (see [https://technet.microsoft.com/en-us/library/cc959352.aspx](https://technet.microsoft.com/en-us/library/cc959352.aspx)).
 
 - [Devel::CheckBin](https://metacpan.org/pod/Devel::CheckBin)
 
