@@ -148,10 +148,21 @@ For other issues, contact the maintainer.
 
 - [IPC::Cmd](https://metacpan.org/pod/IPC::Cmd)
 
-    Comes with a `can_run` function with slightly different semantics that
-    the traditional UNIX where.  It will find executables in the current
-    directory, even though the current directory is not searched for by
-    default on Unix.
+    This module provides (among other things) a `can_run` function, which is
+    similar to `which`.  It is a much heavier module since it does a lot more,
+    and if you use `can_run` it pulls in [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker).  This combination
+    may be overkill for applications which do not need [IPC::Cmd](https://metacpan.org/pod/IPC::Cmd)'s complicated
+    interface for running programs, or do not need the memory overhead required
+    for installing Perl modules.
+
+    At least some older versions will find executables in the current directory,
+    even if the current directory is not in the search path (which is the default
+    on modern Unix).
+
+    `can_run` converts directory path name to the 8.3 version on Windows using
+    `Win32::GetShortPathName` in some cases.  This is useful for tools that just
+    need to run something using `system` in scalar mode, but may be inconvenient
+    for tools like [App::pwhich](https://metacpan.org/pod/App::pwhich) where user readability is a premium.
 
 - [Devel::CheckBin](https://metacpan.org/pod/Devel::CheckBin)
 
