@@ -241,7 +241,7 @@ sub which {
 Not exported by default.
 
 Same as L</which> in array context.  Similar to the C<where> csh 
-built-in ommand or C<which -a> command for platforms that support the 
+built-in command or C<which -a> command for platforms that support the 
 C<-a> option. Will return an array containing all the path names 
 matching C<$short_exe_name>.
 

@@ -116,7 +116,7 @@ matches.
 Not exported by default.
 
 Same as ["which"](#which) in array context.  Similar to the `where` csh 
-built-in ommand or `which -a` command for platforms that support the 
+built-in command or `which -a` command for platforms that support the 
 `-a` option. Will return an array containing all the path names 
 matching `$short_exe_name`.
 
