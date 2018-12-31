@@ -106,6 +106,8 @@ use constant IS_WIN => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
 use constant IS_DOS => IS_WIN();
 use constant IS_CYG => ($^O eq 'cygwin' || $^O eq 'msys');
 
+our $IMPLICIT_CURRENT_DIR = IS_WIN or IS_VMS or IS_MAC;
+
 # For Win32 systems, stores the extensions used for
 # executable files
 # For others, the empty string is used
@@ -190,7 +192,7 @@ sub which {
           if !IS_VMS and !IS_MAC and !IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
 
   my @path = File::Spec->path;
-  if ( IS_WIN or IS_VMS or IS_MAC ) {
+  if ( $IMPLICIT_CURRENT_DIR ) {
     unshift @path, File::Spec->curdir;
   }
 
@@ -256,6 +258,33 @@ sub where {
 
 1;
 
+=head1 GLOBALS
+
+=head2 $IMPLICIT_CURRENT_DIR
+
+True if the current directory is included in the search implicitly on
+whatever platform you are using.  Normally the default is reasonable,
+but on Windows the current directory is included implicitly for older
+shells like C<cmd.exe> and C<command.com>, but not for newer shells
+like PowerShell.  If you overrule this default, you should ALWAYS
+localize the variable to the tightest scope possible, since setting
+this variable from a module can affect other modules.  Thus on Windows
+you can get the correct result if the user is running either C<cmd.exe>
+or PowerShell on Windows you can do this:
+
+ use File::Which qw( which );
+ use Shell::Guess;
+
+ my $path = do {
+   my $is_power = Shell::Guess->running_shell->is_power;
+   local $File::Which::IMPLICIT_CURRENT_DIR = !$is_power;
+   which 'foo';
+ };
+
+For a variety of reasons it is difficult to accurately compute the
+shell that a user is using, but L<Shell::Guess> makes a reasonable
+effort.
+ 
 =head1 CAVEATS
 
 This module has no non-core requirements for Perl 5.6.2 and better.

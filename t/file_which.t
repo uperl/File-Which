@@ -5,6 +5,22 @@ use Test::More;
 use File::Spec ();
 use File::Which qw(which where);
 
+*subtest = sub {
+  my($name, $coderef) = @_;
+  if(Test::More->can('subtest'))
+  {
+    Test::More::subtest($name => sub {
+      $coderef->();
+      done_testing;
+    });
+  }
+  else
+  {
+    diag "faux-subtest: $name";
+    $coderef->();
+  }
+};
+
 subtest 'simple' => sub {
 
   local $ENV{PATH} = $ENV{PATH};
@@ -85,7 +101,6 @@ subtest 'simple' => sub {
     );
   }
 
-  done_testing;
 };
 
 subtest 'all' => sub {
@@ -136,7 +151,6 @@ subtest 'all' => sub {
     "empty string"
   );
 
-  done_testing;
 };
 
 subtest 'common' => sub {
@@ -148,7 +162,6 @@ subtest 'common' => sub {
   ok( $path, "Found path to $tool" );
   ok( -f $path, "$tool exists" );
 
-  done_testing;
 };
 
 done_testing;
