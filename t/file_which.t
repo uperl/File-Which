@@ -84,6 +84,8 @@ subtest 'simple' => sub {
       'Looking for test1.exe in curdir',
     );
   }
+
+  done_testing;
 };
 
 subtest 'all' => sub {
@@ -134,6 +136,7 @@ subtest 'all' => sub {
     "empty string"
   );
 
+  done_testing;
 };
 
 subtest 'common' => sub {
@@ -145,6 +148,7 @@ subtest 'common' => sub {
   ok( $path, "Found path to $tool" );
   ok( -f $path, "$tool exists" );
 
+  done_testing;
 };
 
 done_testing;
