@@ -5,8 +5,6 @@ use Test::More tests => 19;
 use File::Spec ();
 use File::Which qw(which where);
 
-note "IMPLICIT_CURRENT_DIR=$File::Which::IMPLICIT_CURRENT_DIR";
-
 {
 
   local $ENV{PATH} = $ENV{PATH};
