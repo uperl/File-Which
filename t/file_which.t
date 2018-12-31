@@ -5,6 +5,8 @@ use Test::More tests => 19;
 use File::Spec ();
 use File::Which qw(which where);
 
+note "IMPLICIT_CURRENT_DIR=$File::Which::IMPLICIT_CURRENT_DIR";
+
 {
 
   local $ENV{PATH} = $ENV{PATH};
@@ -83,6 +85,8 @@ use File::Which qw(which where);
       File::Spec->catfile(File::Spec->curdir(), 'test1.exe'),
       'Looking for test1.exe in curdir',
     );
+    chdir File::Spec->updir;
+    chdir File::Spec->updir;
   }
 
 }
