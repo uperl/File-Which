@@ -31,7 +31,7 @@ functionality regardless of the underlying platform.
 The focus of this module is correctness and portability.  As a consequence
 platforms where the current directory is implicitly part of the search path
 such as Microsoft Windows will find executables in the current directory,
-whereas on platforms such as UNIX where this is not the case executables 
+whereas on platforms such as UNIX where this is not the case executables
 in the current directory will only be found if the current directory is
 explicitly added to the path.
 
@@ -74,7 +74,7 @@ be discovered even if they are not part of the query.  C<.COM> or extensions
 specified using the C<PATHEXT> environment variable will NOT be discovered
 without the fully qualified name, however.
 
-=head3 Windows 95, 98, ME, MS-DOS, OS/2
+=head3 Windows ME, 98, 95, MS-DOS, OS/2
 
 This set of operating systems don't have the C<PATHEXT> variable, and usually
 you will find executable files there with the extensions C<.exe>, C<.bat> and
@@ -102,7 +102,8 @@ our @EXPORT_OK = 'where';
 
 use constant IS_VMS => ($^O eq 'VMS');
 use constant IS_MAC => ($^O eq 'MacOS');
-use constant IS_DOS => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
+use constant IS_WIN => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
+use constant IS_DOS => IS_WIN();
 use constant IS_CYG => ($^O eq 'cygwin' || $^O eq 'msys');
 
 # For Win32 systems, stores the extensions used for
@@ -110,7 +111,7 @@ use constant IS_CYG => ($^O eq 'cygwin' || $^O eq 'msys');
 # For others, the empty string is used
 # because 'perl' . '' eq 'perl' => easier
 my @PATHEXT = ('');
-if ( IS_DOS ) {
+if ( IS_WIN ) {
   # WinNT. PATHEXT might be set on Cygwin, but not used.
   if ( $ENV{PATHEXT} ) {
     push @PATHEXT, split ';', $ENV{PATHEXT};
@@ -186,10 +187,10 @@ sub which {
   }
 
   return $exec
-          if !IS_VMS and !IS_MAC and !IS_DOS and $exec =~ /\// and -f $exec and -x $exec;
+          if !IS_VMS and !IS_MAC and !IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
 
   my @path = File::Spec->path;
-  if ( IS_DOS or IS_VMS or IS_MAC ) {
+  if ( IS_WIN or IS_VMS or IS_MAC ) {
     unshift @path, File::Spec->curdir;
   }
 
@@ -208,7 +209,7 @@ sub which {
           IS_MAC
           ||
           (
-            ( IS_DOS or IS_CYG )
+            ( IS_WIN or IS_CYG )
             and
             grep {
               $file =~ /$_\z/i
@@ -240,9 +241,9 @@ sub which {
 
 Not exported by default.
 
-Same as L</which> in array context.  Similar to the C<where> csh 
-built-in command or C<which -a> command for platforms that support the 
-C<-a> option. Will return an array containing all the path names 
+Same as L</which> in array context.  Similar to the C<where> csh
+built-in command or C<which -a> command for platforms that support the
+C<-a> option. Will return an array containing all the path names
 matching C<$short_exe_name>.
 
 =cut
@@ -259,7 +260,7 @@ sub where {
 
 This module has no non-core requirements for Perl 5.6.2 and better.
 
-This module is fully supported back to Perl 5.8.1.  It may work on 5.8.0.  
+This module is fully supported back to Perl 5.8.1.  It may work on 5.8.0.
 It should work on Perl 5.6.x and I may even test on 5.6.2.  I will accept
 patches to maintain compatibility for such older Perls, but you may
 need to fix it on 5.6.x / 5.8.0 and send me a patch.

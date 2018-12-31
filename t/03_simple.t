@@ -7,7 +7,7 @@ use Env qw( @PATH );
 
 use constant IS_VMS    => ($^O eq 'VMS');
 use constant IS_MAC    => ($^O eq 'MacOS');
-use constant IS_DOS    => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
+use constant IS_WIN    => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
 use constant IS_CYGWIN => ($^O eq 'cygwin');
 
 # Check that it returns undef if no file is passed
@@ -21,7 +21,7 @@ is(
 );
 
 # Where is the test application
-my $test_bin = File::Spec->catdir( 'corpus', IS_DOS ? 'test-bin-win' : 'test-bin-unix' );
+my $test_bin = File::Spec->catdir( 'corpus', IS_WIN ? 'test-bin-win' : 'test-bin-unix' );
 ok( -d $test_bin, 'Found test-bin' );
 
 # Set up for running the test application
@@ -32,21 +32,21 @@ unless (
   or
   File::Which::IS_MAC
   or
-  File::Which::IS_DOS
+  File::Which::IS_WIN
 ) {
   my $test3 = File::Spec->catfile( $test_bin, 'test3' );
   chmod 0755, $test3;
 }
 
 SKIP: {
-  skip("Not on DOS-like filesystem", 3) unless IS_DOS;
+  skip("Not on DOS-like filesystem", 3) unless IS_WIN;
   is( lc scalar which('test1'), 'corpus\test-bin-win\test1.exe', 'Looking for test1.exe' );
   is( lc scalar which('test2'), 'corpus\test-bin-win\test2.bat', 'Looking for test2.bat' );
   is( scalar which('test3'), undef, 'test3 returns undef' );
 }
 
 SKIP: {
-  skip("Not on a UNIX filesystem", 1) if IS_DOS;
+  skip("Not on a UNIX filesystem", 1) if IS_WIN;
   skip("Not on a UNIX filesystem", 1) if IS_MAC;
   skip("Not on a UNIX filesystem", 1) if IS_VMS;
   is(
@@ -74,7 +74,7 @@ SKIP: {
 
 # Make sure that .\ stuff works on DOSish, VMS, MacOS (. is in PATH implicitly).
 SKIP: {
-  unless ( IS_DOS or IS_VMS ) {
+  unless ( IS_WIN or IS_VMS ) {
     skip("Not on a DOS or VMS filesystem", 1);
   }
 

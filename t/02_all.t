@@ -17,7 +17,7 @@ unless (
   or
   File::Which::IS_MAC
   or
-  File::Which::IS_DOS
+  File::Which::IS_WIN
 ) {
   my $all = File::Spec->catfile( $test_bin, 'all' );
   chmod 0755, $all;
