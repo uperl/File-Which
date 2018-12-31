@@ -120,6 +120,33 @@ built-in command or `which -a` command for platforms that support the
 `-a` option. Will return an array containing all the path names
 matching `$short_exe_name`.
 
+# GLOBALS
+
+## $IMPLICIT\_CURRENT\_DIR
+
+True if the current directory is included in the search implicitly on
+whatever platform you are using.  Normally the default is reasonable,
+but on Windows the current directory is included implicitly for older
+shells like `cmd.exe` and `command.com`, but not for newer shells
+like PowerShell.  If you overrule this default, you should ALWAYS
+localize the variable to the tightest scope possible, since setting
+this variable from a module can affect other modules.  Thus on Windows
+you can get the correct result if the user is running either `cmd.exe`
+or PowerShell on Windows you can do this:
+
+    use File::Which qw( which );
+    use Shell::Guess;
+
+    my $path = do {
+      my $is_power = Shell::Guess->running_shell->is_power;
+      local $File::Which::IMPLICIT_CURRENT_DIR = !$is_power;
+      which 'foo';
+    };
+
+For a variety of reasons it is difficult to accurately compute the
+shell that a user is using, but [Shell::Guess](https://metacpan.org/pod/Shell::Guess) makes a reasonable
+effort.
+
 # CAVEATS
 
 This module has no non-core requirements for Perl 5.6.2 and better.

@@ -106,7 +106,7 @@ use constant IS_WIN => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
 use constant IS_DOS => IS_WIN();
 use constant IS_CYG => ($^O eq 'cygwin' || $^O eq 'msys');
 
-our $IMPLICIT_CURRENT_DIR = IS_WIN or IS_VMS or IS_MAC;
+our $IMPLICIT_CURRENT_DIR = IS_WIN || IS_VMS || IS_MAC;
 
 # For Win32 systems, stores the extensions used for
 # executable files

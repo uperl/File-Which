@@ -1,27 +1,11 @@
 use strict;
 use warnings;
 use Env qw( @PATH );
-use Test::More;
+use Test::More tests => 19;
 use File::Spec ();
 use File::Which qw(which where);
 
-*subtest = sub {
-  my($name, $coderef) = @_;
-  if(Test::More->can('subtest'))
-  {
-    Test::More::subtest($name => sub {
-      $coderef->();
-      done_testing;
-    });
-  }
-  else
-  {
-    diag "faux-subtest: $name";
-    $coderef->();
-  }
-};
-
-subtest 'simple' => sub {
+{
 
   local $ENV{PATH} = $ENV{PATH};
 
@@ -101,9 +85,9 @@ subtest 'simple' => sub {
     );
   }
 
-};
+}
 
-subtest 'all' => sub {
+{
 
   local $ENV{PATH} = $ENV{PATH};
 
@@ -151,9 +135,9 @@ subtest 'all' => sub {
     "empty string"
   );
 
-};
+}
 
-subtest 'common' => sub {
+{
 
   # Look for a very common program
   my $tool = 'perl';
@@ -162,6 +146,5 @@ subtest 'common' => sub {
   ok( $path, "Found path to $tool" );
   ok( -f $path, "$tool exists" );
 
-};
+}
 
-done_testing;
