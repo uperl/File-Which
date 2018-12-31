@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.23      2018-12-31 14:28:16 -0500
   - Internally use IS_WIN instead of IS_DOS for DOS/Windows style
     operating systems.  This is 2018 (almost 2019) after all.
     IS_DOS is now an alias for IS_WIN, although these are not public
