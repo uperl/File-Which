@@ -191,7 +191,18 @@ sub which {
   return $exec
           if !IS_VMS and !IS_MAC and !IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
 
-  my @path = File::Spec->path;
+  my @path;
+  if($^O eq 'MSWin32') {
+    # File::Spec (at least recent versions)
+    # add the implicit . for you on MSWin32,
+    # but we may or may not want to include
+    # that.
+    @path = split(';', $ENV{PATH});
+    s/"//g for @path;
+    @path = grep length, @path;
+  } else {
+    @path = File::Spec->path;
+  }
   if ( $IMPLICIT_CURRENT_DIR ) {
     unshift @path, File::Spec->curdir;
   }
