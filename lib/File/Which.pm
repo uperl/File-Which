@@ -327,6 +327,8 @@ Command line interface to this module.
 
 =item L<IPC::Cmd>
 
+Requires Perl 5.8.3.  Incouded as part of the Perl core as of 5.9.5.
+
 This module provides (among other things) a C<can_run> function, which is
 similar to C<which>.  It is a much heavier module since it does a lot more,
 and if you use C<can_run> it pulls in L<ExtUtils::MakeMaker>.  This combination
@@ -348,8 +350,13 @@ registry (see L<https://technet.microsoft.com/en-us/library/cc959352.aspx>).
 
 =item L<Devel::CheckBin>
 
+Requires Perl 5.8.1.
+
 This module purports to "check that a command is available", but does not
 provide any documentation on how you might use it.
+
+This module also relies on L<ExtUtils::MakeMaker> so has the same overhead
+burdens as L<IPC::Cmd>.
 
 =back
 
