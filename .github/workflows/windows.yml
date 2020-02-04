@@ -39,7 +39,7 @@ jobs:
         run: perl -V
       - name: Install Dependencies
         run: |
-          cpanm -n Dist::Zilla
+          cpanm -n -v Dist::Zilla
           dzil authordeps --missing | cpanm -n
           dzil listdeps --missing   | cpanm -n
       - name: Run Tests
