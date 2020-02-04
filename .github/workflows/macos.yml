@@ -9,10 +9,10 @@ on:
   pull_request:
 
 env:
-  PERL5LIB: ~/perl5/lib/perl5
-  PERL_LOCAL_LIB_ROOT: ~/perl5
-  PERL_MB_OPT: --install_base ~/perl5
-  PERL_MM_OPT: INSTALL_BASE=~/perl5
+  PERL5LIB: /Users/runner/perl5/lib/perl5
+  PERL_LOCAL_LIB_ROOT: /Users/runner/perl5
+  PERL_MB_OPT: --install_base /Users/runner/perl5
+  PERL_MM_OPT: INSTALL_BASE=/Users/runner/perl5
 
 jobs:
   perl:
@@ -23,7 +23,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up Perl
-        run: brew install perl
+        run: |
+          brew install perl
+          curl https://cpanmin.us | perl - App::cpanminus -n
 
       - name: perl -V
         run: perl -V
