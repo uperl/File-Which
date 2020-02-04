@@ -26,6 +26,7 @@ jobs:
         run: |
           brew install perl
           curl https://cpanmin.us | perl - App::cpanminus -n
+          echo "##[add-path]/Users/runner/perl5/bin"
 
       - name: perl -V
         run: perl -V
