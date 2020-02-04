@@ -33,7 +33,6 @@ jobs:
 
       - name: Prepare for cache
         run: |
-          mkdir c:\cx
           perl -V > perlversion.txt
           dir perlversion.txt
 
