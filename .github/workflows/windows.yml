@@ -9,9 +9,9 @@ on:
   pull_request:
 
 env:
-  PERL5LIB: c:\cx\lib\perl5;C:\cx\lib\perl5\MSWin32-x64-multi-thread
-  PERL_MB_OPT: --install_base C:\cx
-  PERL_MM_OPT: INSTALL_BASE=C:\cx
+  PERL5LIB: c:\\cx\\lib\\perl5
+  PERL_MB_OPT: --install_base C:/cx
+  PERL_MM_OPT: INSTALL_BASE=C:/cx
 
 jobs:
   perl:
@@ -39,6 +39,7 @@ jobs:
         run: perl -V
       - name: Install Dependencies
         run: |
+          echo PERL5LIB=%PERL5LIB
           cpanm -n -v Dist::Zilla
           dzil authordeps --missing | cpanm -n
           dzil listdeps --missing   | cpanm -n
