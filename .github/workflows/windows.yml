@@ -39,7 +39,7 @@ jobs:
         run: perl -V
       - name: Install Dependencies
         run: |
-          echo PERL5LIB=%PERL5LIB
+          echo PERL5LIB=%PERL5LIB%
           cpanm -n -v Dist::Zilla
           dzil authordeps --missing | cpanm -n
           dzil listdeps --missing   | cpanm -n
