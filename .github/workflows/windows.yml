@@ -38,10 +38,13 @@ jobs:
           echo "##[add-path]C:\cx\bin;C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin"
       - name: perl -V
         run: perl -V
-      - name: Install Dependencies
+      - name: Install Static Dependencies
         run: |
           cpanm -n Dist::Zilla
           dzil authordeps --missing | cpanm -n
           dzil listdeps --missing   | cpanm -n
+      - name: Install Dynamic Dependencies
+        run: |
+          dzil run 'cpanm --installdeps .'
       - name: Run Tests
         run: dzil test -v
