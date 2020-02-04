@@ -43,6 +43,5 @@ jobs:
           cpanm -n Dist::Zilla
           dzil authordeps --missing | cpanm -n
           dzil listdeps --missing   | cpanm -n
-          dzil run "cpanm -n --installdeps ."
       - name: Run Tests
         run: dzil test -v
