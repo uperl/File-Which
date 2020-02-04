@@ -39,9 +39,8 @@ jobs:
         run: perl -V
       - name: Install Dependencies
         run: |
-          curl -sL https://git.io/cpm | perl - install -L c:/cx --show-build-log-on-failure App::cpm
-          cpm install -L c:/cx Dist::Zilla
-          dzil authordeps --missing | cpm install -L c:/cx -
-          dzil listdeps --missing | cpm install -L c:/cx -
+          cpanm -n Dist::Zilla
+          dzil authordeps --missing | cpanm -n
+          dzil listdeps --missing   | cpanm -n
       - name: Run Tests
         run: dzil test -v
