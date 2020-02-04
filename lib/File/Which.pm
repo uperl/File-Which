@@ -285,7 +285,7 @@ or PowerShell on Windows you can do this:
 
  use File::Which qw( which );
  use Shell::Guess;
-
+ 
  my $path = do {
    my $is_power = Shell::Guess->running_shell->is_power;
    local $File::Which::IMPLICIT_CURRENT_DIR = !$is_power;
@@ -295,7 +295,7 @@ or PowerShell on Windows you can do this:
 For a variety of reasons it is difficult to accurately compute the
 shell that a user is using, but L<Shell::Guess> makes a reasonable
 effort.
- 
+
 =head1 CAVEATS
 
 This module has no non-core requirements for Perl 5.6.2 and better.

@@ -1,17 +1,19 @@
-# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which) [![Build status](https://ci.appveyor.com/api/projects/status/rxvw61235dcy61gq/branch/master?svg=true)](https://ci.appveyor.com/project/plicease/File-Which/branch/master)
+# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which) [![Build status](https://ci.appveyor.com/api/projects/status/rxvw61235dcy61gq/branch/master?svg=true)](https://ci.appveyor.com/project/plicease/File-Which/branch/master) ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg)
 
 Perl implementation of the which utility as an API
 
 # SYNOPSIS
 
-    use File::Which;                  # exports which()
-    use File::Which qw(which where);  # exports which() and where()
-    
-    my $exe_path = which 'perldoc';
-    
-    my @paths = where 'perl';
-    # Or
-    my @paths = which 'perl'; # an array forces search for all of them
+```perl
+use File::Which;                  # exports which()
+use File::Which qw(which where);  # exports which() and where()
+
+my $exe_path = which 'perldoc';
+
+my @paths = where 'perl';
+# Or
+my @paths = which 'perl'; # an array forces search for all of them
+```
 
 # DESCRIPTION
 
@@ -92,8 +94,10 @@ me.
 
 ## which
 
-    my $path = which $short_exe_name;
-    my @paths = which $short_exe_name;
+```perl
+my $path = which $short_exe_name;
+my @paths = which $short_exe_name;
+```
 
 Exported by default.
 
@@ -111,7 +115,9 @@ matches.
 
 ## where
 
-    my @paths = where $short_exe_name;
+```perl
+my @paths = where $short_exe_name;
+```
 
 Not exported by default.
 
@@ -134,14 +140,16 @@ this variable from a module can affect other modules.  Thus on Windows
 you can get the correct result if the user is running either `cmd.exe`
 or PowerShell on Windows you can do this:
 
-    use File::Which qw( which );
-    use Shell::Guess;
+```perl
+use File::Which qw( which );
+use Shell::Guess;
 
-    my $path = do {
-      my $is_power = Shell::Guess->running_shell->is_power;
-      local $File::Which::IMPLICIT_CURRENT_DIR = !$is_power;
-      which 'foo';
-    };
+my $path = do {
+  my $is_power = Shell::Guess->running_shell->is_power;
+  local $File::Which::IMPLICIT_CURRENT_DIR = !$is_power;
+  which 'foo';
+};
+```
 
 For a variety of reasons it is difficult to accurately compute the
 shell that a user is using, but [Shell::Guess](https://metacpan.org/pod/Shell::Guess) makes a reasonable
@@ -176,6 +184,8 @@ For other issues, contact the maintainer.
 
 - [IPC::Cmd](https://metacpan.org/pod/IPC::Cmd)
 
+    Requires Perl 5.8.3.  Incouded as part of the Perl core as of 5.9.5.
+
     This module provides (among other things) a `can_run` function, which is
     similar to `which`.  It is a much heavier module since it does a lot more,
     and if you use `can_run` it pulls in [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker).  This combination
@@ -197,8 +207,13 @@ For other issues, contact the maintainer.
 
 - [Devel::CheckBin](https://metacpan.org/pod/Devel::CheckBin)
 
+    Requires Perl 5.8.1.
+
     This module purports to "check that a command is available", but does not
     provide any documentation on how you might use it.
+
+    This module also relies on [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker) so has the same overhead
+    burdens as [IPC::Cmd](https://metacpan.org/pod/IPC::Cmd).
 
 # AUTHORS
 
