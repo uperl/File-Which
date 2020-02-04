@@ -8,6 +8,11 @@ on:
       - '*'
   pull_request:
 
+env:
+  PERL5LIB: c:/cx/lib/perl5
+  PERL_MB_OPT: --install_base C:/cx
+  PERL_MM_OPT: INSTALL_BASE=C:/cx
+
 jobs:
   perl:
 
@@ -15,16 +20,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Cache CPAN modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-cpan-modules
+        with:
+          path: c:/cx
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+
       - name: Set up Perl
         run: |
           choco install strawberryperl
-          echo "##[add-path]C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin"
+          echo "##[add-path]C:\cx\bin;C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin"
       - name: perl -V
         run: perl -V
       - name: Install Dependencies
         run: |
-          curl -sL https://git.io/cpm | perl - install -g --show-build-log-on-failure App::cpm Dist::Zilla
-          dzil authordeps --missing | cpm install -g -
-          dzil listdeps --missing | cpm install -g -
+          curl -sL https://git.io/cpm | perl - install -L c:/cx --show-build-log-on-failure App::cpm
+          cpm install -L c:/cx Dist::Zilla
+          dzil authordeps --missing | cpm install -L c:/cx -
+          dzil listdeps --missing | cpm install -L c:/cx -
       - name: Run Tests
         run: dzil test -v
