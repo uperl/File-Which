@@ -9,7 +9,7 @@ on:
   pull_request:
 
 env:
-  PERL5LIB: c:\cx\lib\perl5
+  PERL5LIB: c:\cx\lib\perl5;C:\cx\lib\perl5\MSWin32-x64-multi-thread
   PERL_MB_OPT: --install_base C:\cx
   PERL_MM_OPT: INSTALL_BASE=C:\cx
 
