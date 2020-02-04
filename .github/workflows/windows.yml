@@ -30,7 +30,11 @@ jobs:
       - name: perl -V
         run: |
           perl -V
-          perl -V > c:\\cx\perlversion.txt
+
+      - name: Prepare for cache
+        run: |
+          mkdir c:\cx
+          perl -V > c:\cx\perlversion.txt
 
       - name: Cache CPAN modules
         uses: actions/cache@v1
