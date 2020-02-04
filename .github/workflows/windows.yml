@@ -9,9 +9,9 @@ on:
   pull_request:
 
 env:
-  PERL5LIB: c:/cx/lib/perl5
-  PERL_MB_OPT: --install_base C:/cx
-  PERL_MM_OPT: INSTALL_BASE=C:/cx
+  PERL5LIB: c:\cx\lib\perl5
+  PERL_MB_OPT: --install_base C:\cx
+  PERL_MM_OPT: INSTALL_BASE=C:\cx
 
 jobs:
   perl:
@@ -26,7 +26,7 @@ jobs:
         env:
           cache-name: cache-cpan-modules
         with:
-          path: c:/cx
+          path: c:\cx
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}
