@@ -34,15 +34,16 @@ jobs:
       - name: Prepare for cache
         run: |
           mkdir c:\cx
-          perl -V > c:\cx\perlversion.txt
+          perl -V > perlversion.txt
+          dir perlversion.txt
 
       - name: Cache CPAN modules
         uses: actions/cache@v1
         with:
           path: c:\cx
-          key: ${{ runner.os }}-build-${{ hashFiles('c:/cx/perlversion.txt') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('perlversion.txt') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ hashFiles('c:/cx/perlversion.txt') }}
+            ${{ runner.os }}-build-${{ hashFiles('perlversion.txt') }}
 
       - name: Install Static Dependencies
         run: |
