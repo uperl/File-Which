@@ -1,4 +1,4 @@
-# File::Which [![Build Status](https://secure.travis-ci.org/plicease/File-Which.png)](http://travis-ci.org/plicease/File-Which) ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/plicease/File-Which/workflows/macos/badge.svg)
+# File::Which [![Build Status](https://api.travis-ci.com/plicease/File-Which.svg?branch=master)](https://travis-ci.com/github/plicease/File-Which) ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/plicease/File-Which/workflows/macos/badge.svg)
 
 Perl implementation of the which utility as an API
 
@@ -184,7 +184,7 @@ For other issues, contact the maintainer.
 
 - [IPC::Cmd](https://metacpan.org/pod/IPC::Cmd)
 
-    Requires Perl 5.8.3.  Incouded as part of the Perl core as of 5.9.5.
+    Requires Perl 5.8.3.  Included as part of the Perl core as of 5.9.5.
 
     This module provides (among other things) a `can_run` function, which is
     similar to `which`.  It is a much heavier module since it does a lot more,
