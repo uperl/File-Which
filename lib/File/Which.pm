@@ -2,7 +2,7 @@ package File::Which;
 
 use strict;
 use warnings;
-use Exporter   ();
+use base qw( Exporter );
 use File::Spec ();
 
 # ABSTRACT: Perl implementation of the which utility as an API
@@ -96,7 +96,6 @@ me.
 
 =cut
 
-our @ISA       = 'Exporter';
 our @EXPORT    = 'which';
 our @EXPORT_OK = 'where';
 
@@ -116,7 +115,7 @@ my @PATHEXT = ('');
 if ( IS_WIN ) {
   # WinNT. PATHEXT might be set on Cygwin, but not used.
   if ( $ENV{PATHEXT} ) {
-    push @PATHEXT, split ';', $ENV{PATHEXT};
+    push @PATHEXT, split /;/, $ENV{PATHEXT};
   } else {
     # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
     push @PATHEXT, qw{.com .exe .bat};
@@ -158,7 +157,7 @@ sub which {
   return undef unless defined $exec;
   return undef if $exec eq '';
 
-  my $all = wantarray;
+  my $all = wantarray;  ## no critic (Freenode::Wantarray)
   my @results = ();
 
   # check for aliases first
@@ -188,7 +187,7 @@ sub which {
     }
   }
 
-  return $exec
+  return $exec  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           if !IS_VMS and !IS_MAC and !IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
 
   my @path;
@@ -197,7 +196,7 @@ sub which {
     # add the implicit . for you on MSWin32,
     # but we may or may not want to include
     # that.
-    @path = split(';', $ENV{PATH});
+    @path = split /;/, $ENV{PATH};
     s/"//g for @path;
     @path = grep length, @path;
   } else {
@@ -219,12 +218,12 @@ sub which {
         -x _
         or (
           # MacOS doesn't mark as executable so we check -e
-          IS_MAC
+          IS_MAC  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           ||
           (
             ( IS_WIN or IS_CYG )
             and
-            grep {
+            grep {   ## no critic (BuiltinFunctions::ProhibitBooleanGrep)
               $file =~ /$_\z/i
             } @PATHEXT[1..$#PATHEXT]
           )
