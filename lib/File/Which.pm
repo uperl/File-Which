@@ -327,7 +327,7 @@ Command line interface to this module.
 
 =item L<IPC::Cmd>
 
-Requires Perl 5.8.3.  Incouded as part of the Perl core as of 5.9.5.
+Requires Perl 5.8.3.  Included as part of the Perl core as of 5.9.5.
 
 This module provides (among other things) a C<can_run> function, which is
 similar to C<which>.  It is a much heavier module since it does a lot more,

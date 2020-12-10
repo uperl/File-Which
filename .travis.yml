@@ -16,7 +16,8 @@ script:
 
 jobs:
   include:
-    - env: CIP_TAG=5.31
+    - env: CIP_TAG=5.33
+    - env: CIP_TAG=5.32
     - env: CIP_TAG=5.30
     - env: CIP_TAG=5.28
     - env: CIP_TAG=5.26
@@ -29,6 +30,11 @@ jobs:
     - env: CIP_TAG=5.12
     - env: CIP_TAG=5.10
     - env: CIP_TAG=5.8
+
+branches:
+  only:
+    - main
+    - master
 
 cache:
   directories:
