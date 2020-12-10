@@ -1,4 +1,4 @@
-# File::Which [![Build Status](https://api.travis-ci.com/plicease/File-Which.svg?branch=master)](https://travis-ci.com/github/plicease/File-Which) ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/plicease/File-Which/workflows/macos/badge.svg)
+# File::Which [![Build Status](https://api.travis-ci.com/plicease/File-Which.svg?branch=main)](https://travis-ci.com/github/plicease/File-Which) ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/plicease/File-Which/workflows/macos/badge.svg)
 
 Perl implementation of the which utility as an API
 
