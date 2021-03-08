@@ -42,17 +42,11 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/plicease/cip/main/bin/github-bootstrap | bash
 
-      - name: Start-Container
-        run: |
-          cip start
-
       - name: Cache-Key
         id: cache-key
         run: |
-          echo -n '::set-output name=key::' ; cip cache-key
-          sudo chown -R $(id -u):$(id -g) ~/.cip
-          sudo chmod -R a+rwx ~/.cip
-          rm -f /tmp/cip-chmod-fixup
+          echo -n '::set-output name=key::'
+          cip cache-key
 
       - name: Cache CPAN modules
         uses: actions/cache@v2
@@ -61,6 +55,10 @@ jobs:
           key: ${{ runner.os }}-build-${{ steps.cache-key.outputs.key }}
           restore-keys: |
             ${{ runner.os }}-build-${{ steps.cache-key.outputs.key }}
+
+      - name: Start-Container
+        run: |
+          cip start
 
       - name: Diagnostics
         run: |
