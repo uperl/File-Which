@@ -19,6 +19,9 @@ jobs:
 
     runs-on: macOS-latest
 
+    strategy:
+      fail-fast: false
+
     steps:
       - uses: actions/checkout@v2
 

@@ -20,6 +20,9 @@ jobs:
 
     runs-on: windows-latest
 
+    strategy:
+      fail-fast: false
+
     defaults:
       run:
         shell: msys2 {0}
