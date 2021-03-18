@@ -21,6 +21,9 @@ jobs:
 
     runs-on: windows-latest
 
+    strategy:
+      fail-fast: false
+
     defaults:
       run:
         shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
