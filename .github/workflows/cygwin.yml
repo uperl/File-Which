@@ -57,6 +57,7 @@ jobs:
         run: |
           export PATH="/cygdrive/c/cx/bin:$PATH"
           cd $( cygpath -u $GITHUB_WORKSPACE )
+          cpanm Linux::FD
           yes | cpan App::cpanminus || true
           cpanm -n Dist::Zilla
           perl -S dzil authordeps --missing | perl -S cpanm -n
