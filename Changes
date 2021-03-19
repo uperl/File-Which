@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.24      2021-03-19 05:50:14 -0600
   - Documentation improvements
   - Moved repository to new github org
 
