@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Documentation improvements
+  - Moved repository to new github org
 
 1.23      2018-12-31 14:28:16 -0500
   - Internally use IS_WIN instead of IS_DOS for DOS/Windows style

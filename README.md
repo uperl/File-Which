@@ -1,4 +1,4 @@
-# File::Which ![windows](https://github.com/plicease/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/plicease/File-Which/workflows/macos/badge.svg) ![msys2-mingw](https://github.com/plicease/File-Which/workflows/msys2-mingw/badge.svg) ![cygwin](https://github.com/plicease/File-Which/workflows/cygwin/badge.svg)
+# File::Which ![windows](https://github.com/uperl/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/uperl/File-Which/workflows/macos/badge.svg) ![msys2-mingw](https://github.com/uperl/File-Which/workflows/msys2-mingw/badge.svg) ![cygwin](https://github.com/uperl/File-Which/workflows/cygwin/badge.svg)
 
 Perl implementation of the which utility as an API
 
