@@ -1,7 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-  - Tests should not work when Perl isn't in the PATH (gh#29, gh#30)
+
+1.25_01   2021-04-25 07:35:41 -0600
+  - Tests should now work when Perl isn't in the PATH (gh#29, gh#30)
 
 1.24      2021-03-19 05:50:14 -0600
   - Documentation improvements
