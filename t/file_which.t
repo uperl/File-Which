@@ -139,10 +139,24 @@ use File::Which qw(which where);
 
 }
 
-{
+# Look for Perl itself
+SKIP: {
+  local $ENV{PATH} = $ENV{PATH};
+  my $tool;
 
-  # Look for a very common program
-  my $tool = 'perl';
+  {
+    my ($volume,$directories,$file) = File::Spec->splitpath($^X);
+    $tool = $file;
+    my $dir = File::Spec->catpath($volume, $directories);
+    if(defined $dir && length $dir)
+    {
+      #diag "temporarily adding $dir to PATH";
+      push @PATH, $dir;
+    }
+  }
+
+  skip("Not able to find the name of Perl", 3) unless defined $tool;
+
   my $path = which($tool);
   ok( defined $path, "Found path to $tool" );
   ok( $path, "Found path to $tool" );
