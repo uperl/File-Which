@@ -312,7 +312,7 @@ report of how it went.
 
 Bugs should be reported via the GitHub issue tracker
 
-L<https://github.com/plicease/File-Which/issues>
+L<https://github.com/uperl/File-Which/issues>
 
 For other issues, contact the maintainer.
 
