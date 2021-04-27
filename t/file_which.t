@@ -5,6 +5,21 @@ use Test::More tests => 19;
 use File::Spec ();
 use File::Which qw(which where);
 
+unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
+  foreach my $path (qw(
+                    corpus/test-bin-unix/test3
+                    corpus/test-bin-unix/all
+                    corpus/test-bin-unix/0
+                    corpus/test-bin-win/0.exe
+                    corpus/test-bin-win/all.bat
+                    corpus/test-bin-win/all.exe
+                    corpus/test-bin-win/test1.exe
+                    corpus/test-bin-win/test2.bat
+  )) {
+    chmod 0755, $path;
+  }
+}
+
 {
 
   local $ENV{PATH} = $ENV{PATH};
@@ -26,16 +41,6 @@ use File::Which qw(which where);
   # Set up for running the test application
   @PATH = $test_bin;
   push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if File::Which::IS_CYG;
-  unless (
-    File::Which::IS_VMS
-    or
-    File::Which::IS_MAC
-    or
-    File::Which::IS_WIN
-  ) {
-    my $test3 = File::Spec->catfile( $test_bin, 'test3' );
-    chmod 0755, $test3;
-  }
 
   SKIP: {
     skip("Not on DOS-like filesystem", 3) unless File::Which::IS_WIN;
@@ -100,16 +105,6 @@ use File::Which qw(which where);
   # Set up for running the test application
   @PATH = ($test_bin);
   push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if $^O =~ /^(cygwin|msys)$/;
-  unless (
-    File::Which::IS_VMS
-    or
-    File::Which::IS_MAC
-    or
-    File::Which::IS_WIN
-  ) {
-    my $all = File::Spec->catfile( $test_bin, 'all' );
-    chmod 0755, $all;
-  }
 
   my @result = which('all');
   like( $result[0], qr/all/i, 'Found all' );
