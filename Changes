@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Fix bug in test where test files sometimes didn't have
+    execute permissions (gh#31)
 
 1.25_01   2021-04-25 07:35:41 -0600
   - Tests should now work when Perl isn't in the PATH (gh#29, gh#30)
