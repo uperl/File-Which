@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.26_01   2021-04-27 05:15:20 -0600
   - Fix bug in test where test files sometimes didn't have
     execute permissions (gh#31)
   - Add Env as an explicit test prereq (gh#13, gh#32)
