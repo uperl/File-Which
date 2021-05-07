@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+1.27      2021-05-07 04:54:31 -0600
+  - Production release identical to 1.26_01
+
 1.26_01   2021-04-27 05:15:20 -0600
   - Fix bug in test where test files sometimes didn't have
     execute permissions (gh#31)
