@@ -157,7 +157,7 @@ sub which {
   return undef unless defined $exec;
   return undef if $exec eq '';
 
-  my $all = wantarray;  ## no critic (Freenode::Wantarray)
+  my $all = wantarray;  ## no critic (Community::Wantarray)
   my @results = ();
 
   # check for aliases first
