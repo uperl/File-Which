@@ -131,6 +131,10 @@ sub new {
 
   $self->{PATHEXT} = $self->_default_pathext;
 
+  if( exists $opts{fixed_paths} ) {
+    $self->{fixed_paths} = $opts{fixed_paths};
+  }
+
   $self;
 }
 
@@ -246,7 +250,9 @@ sub which {
   return $exec  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           if !$self->_is_vms and !$self->_is_mac and !$self->_is_win and $exec =~ /\// and -f $exec and -x $exec;
 
-  my @path = @{ $self->_default_path };
+  my @path = exists $self->{fixed_paths}
+    ? @{ $self->{fixed_paths} }
+    : @{ $self->_default_path };
 
   if ( $self->{IMPLICIT_CURRENT_DIR} ) {
     unshift @path, File::Spec->curdir;
