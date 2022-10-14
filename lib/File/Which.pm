@@ -160,6 +160,23 @@ sub _default_pathext {
   \@PATHEXT;
 }
 
+sub _default_path {
+  my $self = shift;
+  my @path;
+  if($self->{osname} eq 'MSWin32') {
+    # File::Spec (at least recent versions)
+    # add the implicit . for you on MSWin32,
+    # but we may or may not want to include
+    # that.
+    @path = split /;/, $ENV{PATH};
+    s/"//g for @path;
+    @path = grep length, @path;
+  } else {
+    @path = File::Spec->path;
+  }
+  \@path;
+}
+
 =head1 FUNCTIONS
 
 =head2 which
@@ -229,18 +246,8 @@ sub which {
   return $exec  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           if !$self->_is_vms and !$self->_is_mac and !$self->_is_win and $exec =~ /\// and -f $exec and -x $exec;
 
-  my @path;
-  if($self->{osname} eq 'MSWin32') {
-    # File::Spec (at least recent versions)
-    # add the implicit . for you on MSWin32,
-    # but we may or may not want to include
-    # that.
-    @path = split /;/, $ENV{PATH};
-    s/"//g for @path;
-    @path = grep length, @path;
-  } else {
-    @path = File::Spec->path;
-  }
+  my @path = @{ $self->_default_path };
+
   if ( $self->{IMPLICIT_CURRENT_DIR} ) {
     unshift @path, File::Spec->curdir;
   }
