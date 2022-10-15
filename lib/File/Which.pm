@@ -107,12 +107,12 @@ sub _is_win { my $osname = &_get_osname; ($osname eq 'MSWin32' or $osname eq 'do
 sub _is_dos { _is_win(@_); }
 sub _is_cyg { my $osname = &_get_osname; ($osname eq 'cygwin' || $osname eq 'msys'); }
 
-sub _default_IMPLICIT_CURRENT_DIR {
+sub _default_implicit_current_dir {
   my $self = shift;
   $self->_is_win || $self->_is_vms || $self->_is_mac;
 }
 our $IMPLICIT_CURRENT_DIR = do {
-  File::Which->new->_default_IMPLICIT_CURRENT_DIR;
+  File::Which->new->_default_implicit_current_dir;
 };
 
 sub new {
@@ -124,10 +124,10 @@ sub new {
     osname => $osname,
   }, $class;
 
-  $self->{IMPLICIT_CURRENT_DIR} =
-    exists $opts{IMPLICIT_CURRENT_DIR}
-    ? $opts{IMPLICIT_CURRENT_DIR}
-    : $self->_default_IMPLICIT_CURRENT_DIR;
+  $self->{implicit_current_dir} =
+    exists $opts{implicit_current_dir}
+    ? $opts{implicit_current_dir}
+    : $self->_default_implicit_current_dir;
 
   $self->{PATHEXT} = $self->_default_pathext;
 
@@ -209,7 +209,7 @@ sub which {
     ? File::Which->new(
         # Use global to retain compatibility, but only for the functional
         # interface.
-        IMPLICIT_CURRENT_DIR => $IMPLICIT_CURRENT_DIR,
+        implicit_current_dir => $IMPLICIT_CURRENT_DIR,
       )
     : shift;
   my ($exec) = @_;
@@ -254,7 +254,7 @@ sub which {
     ? @{ $self->{fixed_paths} }
     : @{ $self->_default_path };
 
-  if ( $self->{IMPLICIT_CURRENT_DIR} ) {
+  if ( $self->{implicit_current_dir} ) {
     unshift @path, File::Spec->curdir;
   }
 
