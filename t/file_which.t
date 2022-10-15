@@ -5,7 +5,7 @@ use Test::More tests => 19;
 use File::Spec ();
 use File::Which qw(which where);
 
-unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
+unless (File::Which::_is_vms() or File::Which::_is_mac() or File::Which::_is_win() ) {
   foreach my $path (qw(
                     corpus/test-bin-unix/test3
                     corpus/test-bin-unix/all
@@ -35,24 +35,24 @@ unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
   );
 
   # Where is the test application
-  my $test_bin = File::Spec->catdir( 'corpus', File::Which::IS_WIN ? 'test-bin-win' : 'test-bin-unix' );
+  my $test_bin = File::Spec->catdir( 'corpus', File::Which::_is_win() ? 'test-bin-win' : 'test-bin-unix' );
   ok( -d $test_bin, 'Found test-bin' );
 
   # Set up for running the test application
   @PATH = $test_bin;
-  push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if File::Which::IS_CYG;
+  push @PATH, File::Spec->catdir( 'corpus', 'test-bin-win' ) if File::Which::_is_cyg();
 
   SKIP: {
-    skip("Not on DOS-like filesystem", 3) unless File::Which::IS_WIN;
+    skip("Not on DOS-like filesystem", 3) unless File::Which::_is_win();
     is( lc scalar which('test1'), 'corpus\test-bin-win\test1.exe', 'Looking for test1.exe' );
     is( lc scalar which('test2'), 'corpus\test-bin-win\test2.bat', 'Looking for test2.bat' );
     is( scalar which('test3'), undef, 'test3 returns undef' );
   }
 
   SKIP: {
-    skip("Not on a UNIX filesystem", 1) if File::Which::IS_WIN;
-    skip("Not on a UNIX filesystem", 1) if File::Which::IS_MAC;
-    skip("Not on a UNIX filesystem", 1) if File::Which::IS_VMS;
+    skip("Not on a UNIX filesystem", 1) if File::Which::_is_win();
+    skip("Not on a UNIX filesystem", 1) if File::Which::_is_mac();
+    skip("Not on a UNIX filesystem", 1) if File::Which::_is_vms();
     is(
       scalar(which('test3')),
       File::Spec->catfile( $test_bin, 'test3'),
@@ -61,7 +61,7 @@ unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
   }
 
   SKIP: {
-    skip("Not on a cygwin filesystem", 2) unless File::Which::IS_CYG;
+    skip("Not on a cygwin filesystem", 2) unless File::Which::_is_cyg();
 
     # Cygwin: should make test1.exe transparent
     is(
@@ -78,7 +78,7 @@ unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
 
   # Make sure that .\ stuff works on DOSish, VMS, MacOS (. is in PATH implicitly).
   SKIP: {
-    unless ( File::Which::IS_WIN or File::Which::IS_VMS ) {
+    unless ( File::Which::_is_win() or File::Which::_is_vms() ) {
       skip("Not on a DOS or VMS filesystem", 1);
     }
 
