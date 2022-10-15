@@ -101,15 +101,15 @@ our @EXPORT_OK = 'where';
 
 sub _get_osname { @_ == 1 && ref $_[0] ? $_[0]->{osname} : $^O }
 
-sub IS_VMS { my $osname = &_get_osname; ($osname eq 'VMS'); }
-sub IS_MAC { my $osname = &_get_osname; ($osname eq 'MacOS'); }
-sub IS_WIN { my $osname = &_get_osname; ($osname eq 'MSWin32' or $osname eq 'dos' or $osname eq 'os2'); }
-sub IS_DOS { IS_WIN(@_); }
-sub IS_CYG { my $osname = &_get_osname; ($osname eq 'cygwin' || $osname eq 'msys'); }
+sub _is_vms { my $osname = &_get_osname; ($osname eq 'VMS'); }
+sub _is_mac { my $osname = &_get_osname; ($osname eq 'MacOS'); }
+sub _is_win { my $osname = &_get_osname; ($osname eq 'MSWin32' or $osname eq 'dos' or $osname eq 'os2'); }
+sub _is_dos { _is_win(@_); }
+sub _is_cyg { my $osname = &_get_osname; ($osname eq 'cygwin' || $osname eq 'msys'); }
 
 sub _default_IMPLICIT_CURRENT_DIR {
   my $self = shift;
-  $self->IS_WIN || $self->IS_VMS || $self->IS_MAC;
+  $self->_is_win || $self->_is_vms || $self->_is_mac;
 }
 our $IMPLICIT_CURRENT_DIR = do {
   File::Which->new->_default_IMPLICIT_CURRENT_DIR;
@@ -141,7 +141,7 @@ sub _default_pathext {
   # For others, the empty string is used
   # because 'perl' . '' eq 'perl' => easier
   my @PATHEXT = ('');
-  if ( $self->IS_WIN ) {
+  if ( $self->_is_win ) {
     # WinNT. PATHEXT might be set on Cygwin, but not used.
     if ( $ENV{PATHEXT} ) {
       push @PATHEXT, split /;/, $ENV{PATHEXT};
@@ -149,9 +149,9 @@ sub _default_pathext {
       # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
       push @PATHEXT, qw{.com .exe .bat};
     }
-  } elsif ( $self->IS_VMS ) {
+  } elsif ( $self->_is_vms ) {
     push @PATHEXT, qw{.exe .com};
-  } elsif ( $self->IS_CYG ) {
+  } elsif ( $self->_is_cyg ) {
     # See this for more info
     # http://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-exe
     push @PATHEXT, qw{.exe .com};
@@ -200,7 +200,7 @@ sub which {
   my @results = ();
 
   # check for aliases first
-  if ( $self->IS_VMS ) {
+  if ( $self->_is_vms ) {
     my $symbol = `SHOW SYMBOL $exec`;
     chomp($symbol);
     unless ( $? ) {
@@ -208,7 +208,7 @@ sub which {
       push @results, $symbol;
     }
   }
-  if ( $self->IS_MAC ) {
+  if ( $self->_is_mac ) {
     my @aliases = split /\,/, $ENV{Aliases};
     foreach my $alias ( @aliases ) {
       # This has not been tested!!
@@ -227,7 +227,7 @@ sub which {
   }
 
   return $exec  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
-          if !$self->IS_VMS and !$self->IS_MAC and !$self->IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
+          if !$self->_is_vms and !$self->_is_mac and !$self->_is_win and $exec =~ /\// and -f $exec and -x $exec;
 
   my @path;
   if($self->{osname} eq 'MSWin32') {
@@ -258,10 +258,10 @@ sub which {
         -x _
         or (
           # MacOS doesn't mark as executable so we check -e
-          $self->IS_MAC  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
+          $self->_is_mac  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           ||
           (
-            ( $self->IS_WIN or $self->IS_CYG )
+            ( $self->_is_win or $self->_is_cyg )
             and
             grep {   ## no critic (BuiltinFunctions::ProhibitBooleanGrep)
               $file =~ /$_\z/i
