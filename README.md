@@ -1,4 +1,4 @@
-# File::Which ![static](https://github.com/uperl/File-Which/workflows/static/badge.svg) ![linux](https://github.com/uperl/File-Which/workflows/linux/badge.svg) ![windows](https://github.com/uperl/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/uperl/File-Which/workflows/macos/badge.svg) ![msys2-mingw](https://github.com/uperl/File-Which/workflows/msys2-mingw/badge.svg) ![cygwin](https://github.com/uperl/File-Which/workflows/cygwin/badge.svg)
+# File::Which ![static](https://github.com/uperl/File-Which/workflows/static/badge.svg) ![linux](https://github.com/uperl/File-Which/workflows/linux/badge.svg) ![windows](https://github.com/uperl/File-Which/workflows/windows/badge.svg) ![macos](https://github.com/uperl/File-Which/workflows/macos/badge.svg) ![msys2-mingw](https://github.com/uperl/File-Which/workflows/msys2-mingw/badge.svg)
 
 Perl implementation of the which utility as an API
 
@@ -223,7 +223,7 @@ For other issues, contact the maintainer.
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2002 by Per Einar Ellefsen <pereinar@cpan.org>.
+This software is copyright (c) 2002-2024 by Per Einar Ellefsen <pereinar@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

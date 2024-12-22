@@ -1,2 +1,4 @@
 /File-Which-*
 /.build
+*.old
+*.orig
