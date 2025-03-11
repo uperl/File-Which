@@ -99,33 +99,86 @@ me.
 our @EXPORT    = 'which';
 our @EXPORT_OK = 'where';
 
-use constant IS_VMS => ($^O eq 'VMS');
-use constant IS_MAC => ($^O eq 'MacOS');
-use constant IS_WIN => ($^O eq 'MSWin32' or $^O eq 'dos' or $^O eq 'os2');
-use constant IS_DOS => IS_WIN();
-use constant IS_CYG => ($^O eq 'cygwin' || $^O eq 'msys');
+sub _get_osname { @_ == 1 && ref $_[0] ? $_[0]->{osname} : $^O }
 
-our $IMPLICIT_CURRENT_DIR = IS_WIN || IS_VMS || IS_MAC;
+sub _is_vms { my $osname = &_get_osname; ($osname eq 'VMS'); }
+sub _is_mac { my $osname = &_get_osname; ($osname eq 'MacOS'); }
+sub _is_win { my $osname = &_get_osname; ($osname eq 'MSWin32' or $osname eq 'dos' or $osname eq 'os2'); }
+sub _is_dos { _is_win(@_); }
+sub _is_cyg { my $osname = &_get_osname; ($osname eq 'cygwin' || $osname eq 'msys'); }
 
-# For Win32 systems, stores the extensions used for
-# executable files
-# For others, the empty string is used
-# because 'perl' . '' eq 'perl' => easier
-my @PATHEXT = ('');
-if ( IS_WIN ) {
-  # WinNT. PATHEXT might be set on Cygwin, but not used.
-  if ( $ENV{PATHEXT} ) {
-    push @PATHEXT, split /;/, $ENV{PATHEXT};
-  } else {
-    # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
-    push @PATHEXT, qw{.com .exe .bat};
+sub _default_implicit_current_dir {
+  my $self = shift;
+  $self->_is_win || $self->_is_vms || $self->_is_mac;
+}
+our $IMPLICIT_CURRENT_DIR = do {
+  File::Which->new->_default_implicit_current_dir;
+};
+
+sub new {
+  my ($class, %opts) = @_;
+
+  my $osname = exists $opts{os} ? $opts{os} : $^O;
+
+  my $self = bless {
+    osname => $osname,
+  }, $class;
+
+  $self->{implicit_current_dir} =
+    exists $opts{implicit_current_dir}
+    ? $opts{implicit_current_dir}
+    : $self->_default_implicit_current_dir;
+
+  $self->{PATHEXT} = $self->_default_pathext;
+
+  if( exists $opts{fixed_paths} ) {
+    $self->{fixed_paths} = $opts{fixed_paths};
   }
-} elsif ( IS_VMS ) {
-  push @PATHEXT, qw{.exe .com};
-} elsif ( IS_CYG ) {
-  # See this for more info
-  # http://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-exe
-  push @PATHEXT, qw{.exe .com};
+
+  $self;
+}
+
+sub _default_pathext {
+  my $self = shift;
+  # For Win32 systems, stores the extensions used for
+  # executable files
+  # For others, the empty string is used
+  # because 'perl' . '' eq 'perl' => easier
+  my @PATHEXT = ('');
+  if ( $self->_is_win ) {
+    # WinNT. PATHEXT might be set on Cygwin, but not used.
+    if ( $ENV{PATHEXT} ) {
+      push @PATHEXT, split /;/, $ENV{PATHEXT};
+    } else {
+      # Win9X or other: doesn't have PATHEXT, so needs hardcoded.
+      push @PATHEXT, qw{.com .exe .bat};
+    }
+  } elsif ( $self->_is_vms ) {
+    push @PATHEXT, qw{.exe .com};
+  } elsif ( $self->_is_cyg ) {
+    # See this for more info
+    # http://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-exe
+    push @PATHEXT, qw{.exe .com};
+  }
+
+  \@PATHEXT;
+}
+
+sub _default_path {
+  my $self = shift;
+  my @path;
+  if($self->{osname} eq 'MSWin32') {
+    # File::Spec (at least recent versions)
+    # add the implicit . for you on MSWin32,
+    # but we may or may not want to include
+    # that.
+    @path = split /;/, $ENV{PATH};
+    s/"//g for @path;
+    @path = grep length, @path;
+  } else {
+    @path = File::Spec->path;
+  }
+  \@path;
 }
 
 =head1 FUNCTIONS
@@ -152,6 +205,13 @@ matches.
 =cut
 
 sub which {
+  my $self = @_ == 1
+    ? File::Which->new(
+        # Use global to retain compatibility, but only for the functional
+        # interface.
+        implicit_current_dir => $IMPLICIT_CURRENT_DIR,
+      )
+    : shift;
   my ($exec) = @_;
 
   return undef unless defined $exec;
@@ -161,7 +221,7 @@ sub which {
   my @results = ();
 
   # check for aliases first
-  if ( IS_VMS ) {
+  if ( $self->_is_vms ) {
     my $symbol = `SHOW SYMBOL $exec`;
     chomp($symbol);
     unless ( $? ) {
@@ -169,7 +229,7 @@ sub which {
       push @results, $symbol;
     }
   }
-  if ( IS_MAC ) {
+  if ( $self->_is_mac ) {
     my @aliases = split /\,/, $ENV{Aliases};
     foreach my $alias ( @aliases ) {
       # This has not been tested!!
@@ -188,24 +248,17 @@ sub which {
   }
 
   return $exec  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
-          if !IS_VMS and !IS_MAC and !IS_WIN and $exec =~ /\// and -f $exec and -x $exec;
+          if !$self->_is_vms and !$self->_is_mac and !$self->_is_win and $exec =~ /\// and -f $exec and -x $exec;
 
-  my @path;
-  if($^O eq 'MSWin32') {
-    # File::Spec (at least recent versions)
-    # add the implicit . for you on MSWin32,
-    # but we may or may not want to include
-    # that.
-    @path = split /;/, $ENV{PATH};
-    s/"//g for @path;
-    @path = grep length, @path;
-  } else {
-    @path = File::Spec->path;
-  }
-  if ( $IMPLICIT_CURRENT_DIR ) {
+  my @path = exists $self->{fixed_paths}
+    ? @{ $self->{fixed_paths} }
+    : @{ $self->_default_path };
+
+  if ( $self->{implicit_current_dir} ) {
     unshift @path, File::Spec->curdir;
   }
 
+  my @PATHEXT = @{ $self->{PATHEXT} };
   foreach my $base ( map { File::Spec->catfile($_, $exec) } @path ) {
     for my $ext ( @PATHEXT ) {
       my $file = $base.$ext;
@@ -218,10 +271,10 @@ sub which {
         -x _
         or (
           # MacOS doesn't mark as executable so we check -e
-          IS_MAC  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
+          $self->_is_mac  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           ||
           (
-            ( IS_WIN or IS_CYG )
+            ( $self->_is_win or $self->_is_cyg )
             and
             grep {   ## no critic (BuiltinFunctions::ProhibitBooleanGrep)
               $file =~ /$_\z/i
