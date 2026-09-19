@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Clarify that "MacOS" in comments and docs refers to the classic,
+    pre-OS X environment (now called OS9 for short) (gh#43)
 
 1.27      2021-05-07 04:54:31 -0600
   - Production release identical to 1.26_01
