@@ -90,6 +90,19 @@ certain it has ever been tested on VMS.  If this platform is important to you
 and you can help me verify and or support it on that platform please contact
 me.
 
+### OS9
+
+Prior to Mac OS X, "classic" Mac OS (System 7, 8 and 9) used `$^O` value
+`MacOS` and had a very different filesystem and process model than the
+Darwin-based macOS of today.  Throughout this document and in the source
+code, `OS9` is used as a shorthand to refer to this classic, pre-OS X
+environment (covering Mac OS 7 and 8 as well as 9).  Modern Apple macOS is
+Unix-like and is covered by the ["Linux, \*BSD and other UNIXes"](#linux-bsd-and-other-unixes) section
+above instead.
+
+As of 2015 the current maintainer does not test on OS9, and this platform
+is essentially unmaintained.
+
 # FUNCTIONS
 
 ## which
