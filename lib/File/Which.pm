@@ -94,6 +94,19 @@ certain it has ever been tested on VMS.  If this platform is important to you
 and you can help me verify and or support it on that platform please contact
 me.
 
+=head3 OS9
+
+Prior to Mac OS X, "classic" Mac OS (System 7, 8 and 9) used C<$^O> value
+C<MacOS> and had a very different filesystem and process model than the
+Darwin-based macOS of today.  Throughout this document and in the source
+code, C<OS9> is used as a shorthand to refer to this classic, pre-OS X
+environment (covering Mac OS 7 and 8 as well as 9).  Modern Apple macOS is
+Unix-like and is covered by the L</"Linux, *BSD and other UNIXes"> section
+above instead.
+
+As of 2015 the current maintainer does not test on OS9, and this platform
+is essentially unmaintained.
+
 =cut
 
 our @EXPORT    = 'which';
@@ -217,7 +230,7 @@ sub which {
         # Executable, normal case
         -x _
         or (
-          # MacOS doesn't mark as executable so we check -e
+          # OS9 (classic Mac OS) doesn't mark files as executable, so we check -e instead
           IS_MAC  ## no critic (ValuesAndExpressions::ProhibitMixedBooleanOperators)
           ||
           (

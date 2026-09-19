@@ -76,7 +76,7 @@ unless (File::Which::IS_VMS or File::Which::IS_MAC or File::Which::IS_WIN ) {
     );
   }
 
-  # Make sure that .\ stuff works on DOSish, VMS, MacOS (. is in PATH implicitly).
+  # Make sure that .\ stuff works on DOSish, VMS, OS9 (classic Mac OS) (. is in PATH implicitly).
   SKIP: {
     unless ( File::Which::IS_WIN or File::Which::IS_VMS ) {
       skip("Not on a DOS or VMS filesystem", 1);
