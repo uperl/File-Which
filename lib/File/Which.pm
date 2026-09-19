@@ -8,9 +8,6 @@ use File::Spec ();
 # ABSTRACT: Perl implementation of the which utility as an API
 # VERSION
 
-=for stopwords
-macOS
-
 =head1 SYNOPSIS
 
  use File::Which;                  # exports which()
